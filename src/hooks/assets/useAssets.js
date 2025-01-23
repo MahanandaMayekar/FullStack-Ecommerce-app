@@ -1,8 +1,9 @@
 
-import { assets } from './../../assets/assets';
+import { assets, products } from './../../assets/assets';
+
 
 export const useAssets = () => {
 
-    return {assets}
+    return {assets,products}
     
 }
