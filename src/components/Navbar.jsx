@@ -1,5 +1,5 @@
 import { useAssets } from '../hooks/assets/useAssets'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import {
@@ -16,9 +16,13 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 export const Navbar = () => {
   const { assets } = useAssets()
+  const navigate = useNavigate()
+  function handleOnclick() {
+    navigate("/")
+  }
   return (
     <div className="flex item center justify-between font-medium py-5 ">
-      <img src={assets.logo} alt="" className="w-36" />
+      <img src={assets.logo} alt="" className="w-36" onClick={handleOnclick} />
       <ul className="hidden sm:flex gap-5 text-sm text-black">
         <NavLink to="/" className="flex items-center gap-1 flex-col">
           <p>HOME</p>
