@@ -2,7 +2,7 @@ import React from "react";
 import Collections from "./Collections";
 import { useAssets } from "@/hooks/assets/useAssets";
 import { useEffect, useState } from "react";
-
+import { useShopContext } from '@/hooks/context/useShopContext';
 const CollectionContainer = () => {
     const { products } = useAssets();
     const [showFilter, setShowFilter] = useState(false);
@@ -10,10 +10,11 @@ const CollectionContainer = () => {
     const [category, setCategory] = useState([]);
     const [type, setType] = useState([]);
     const [sortType, setSortType] = useState("Relavent");
+    const { search, showsearchBar } = useShopContext();
 
     useEffect(() => {
-        applyFilter();
-    }, [category, type]);
+      applyFilter();
+    }, [category, type, search, showsearchBar]);
     useEffect(() => {
         sortProducts();
     }, [sortType]);
@@ -48,6 +49,9 @@ const CollectionContainer = () => {
             productCopy = productCopy.filter((item) =>
                 category.includes(item.category)
             );
+        }
+        if (search && showsearchBar) {
+            productCopy=productCopy.filter((item)=>item.name.toLowerCase().includes(search.toLowerCase()))
         }
 
         setFilteredProducts(productCopy);
