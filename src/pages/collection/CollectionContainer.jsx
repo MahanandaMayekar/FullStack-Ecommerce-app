@@ -18,7 +18,7 @@ const CollectionContainer = () => {
     useEffect(() => {
         sortProducts();
     }, [sortType]);
-    function handleOnclick() {
+    function handleOnclick() {           
         setShowFilter(!showFilter);
     }
     function handleToggle(e) {
@@ -76,14 +76,16 @@ const CollectionContainer = () => {
         }
     };
     return (
-        <Collections
-            handleOnclick={handleOnclick}
-            handleToggle={handleToggle}
-            filteredProducts={filteredProducts}
-            setType={setType}
-            setSortType={setSortType}
-            handleType={handleType}
-        />
+      <Collections
+        handleOnclick={handleOnclick}
+        handleToggle={handleToggle}
+        filteredProducts={filteredProducts}
+        setType={setType}
+        setSortType={setSortType}
+        handleType={handleType}
+        showFilter={showFilter}
+        setShowFilter={setShowFilter}
+      />
     );
 };
 

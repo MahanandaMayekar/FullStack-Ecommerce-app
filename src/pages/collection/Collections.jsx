@@ -11,8 +11,6 @@ const Collections = ({
   setSortType,
   handleType,
 }) => {
-  
-
   return (
     <div className="flex flex-col sm:flex-row gap-2 sm:gap-10 pt-10 border-t mb-9">
       <div className="min-w-60">
