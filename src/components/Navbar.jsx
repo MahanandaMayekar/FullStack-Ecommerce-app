@@ -1,5 +1,5 @@
 import { useAssets } from '../hooks/assets/useAssets'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import {
@@ -19,12 +19,16 @@ import { useShopContext } from '@/hooks/context/useShopContext';
 export const Navbar = () => {
   const { assets } = useAssets()
   const navigate = useNavigate()
+  const location=useLocation()
   const { setShowsearchBar, showsearchBar } = useShopContext();
   function handleOnclick() {
     navigate("/")
   }
   function handleDiaplySearchBar() {
-   setShowsearchBar(!showsearchBar);
+    setShowsearchBar(!showsearchBar);
+    if (!location.pathname.includes("/collection")) {
+      navigate("/collection")
+    }
   }
   return (
     <div className="flex item center justify-between font-medium py-5 ">
