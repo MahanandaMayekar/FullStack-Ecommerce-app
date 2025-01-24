@@ -13,12 +13,18 @@ import {
 } from "@/components/ui/menubar";
 import { BsCart4 } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useShopContext } from '@/hooks/context/useShopContext';
+
 
 export const Navbar = () => {
   const { assets } = useAssets()
   const navigate = useNavigate()
+  const { setShowsearchBar, showsearchBar } = useShopContext();
   function handleOnclick() {
     navigate("/")
+  }
+  function handleDiaplySearchBar() {
+   setShowsearchBar(!showsearchBar);
   }
   return (
     <div className="flex item center justify-between font-medium py-5 ">
@@ -42,7 +48,7 @@ export const Navbar = () => {
         </NavLink>
       </ul>
       <div className="flex items-center gap-6 justify-center cursor-pointer ">
-        <IoSearch size="25" />
+        <IoSearch size="25" onClick={handleDiaplySearchBar} />
         <div className="group relative">
           <Menubar className="border-none ">
             <MenubarMenu>
