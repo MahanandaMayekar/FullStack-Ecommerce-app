@@ -14,12 +14,14 @@ import {
 import { BsCart4 } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useShopContext } from '@/hooks/context/useShopContext';
+import useCart from '@/hooks/context/useCart';
 
 
 export const Navbar = () => {
   const { assets } = useAssets()
   const navigate = useNavigate()
-  const location=useLocation()
+  const location = useLocation()
+  const { getTotalProductsInCart } = useCart();
   const { setShowsearchBar, showsearchBar } = useShopContext();
   function handleOnclick() {
     navigate("/")
@@ -71,7 +73,7 @@ export const Navbar = () => {
         <NavLink to="/cart" className="relative">
           <BsCart4 size="25" />
           <p className="absolute right-[-5px] bottom-[-5px]  w-5  text-center bg-black text-white rounded-full text-[10.5px] ">
-            10
+            {getTotalProductsInCart()}
           </p>
         </NavLink>
 
@@ -84,7 +86,6 @@ export const Navbar = () => {
               </MenubarTrigger>
               <MenubarContent>
                 <MenubarItem>
-
                   <NavLink to="/" className="hover:font-bold">
                     Home
                   </NavLink>

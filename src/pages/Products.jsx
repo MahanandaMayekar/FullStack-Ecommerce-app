@@ -1,5 +1,6 @@
 import RelatedProducts from '@/components/RelatedProducts';
 import { useAssets } from "@/hooks/assets/useAssets";
+import useCart from '@/hooks/context/useCart';
 import { useShopContext } from '@/hooks/context/useShopContext';
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -10,7 +11,8 @@ const Products = () => {
   const [currentProduct, setCurrentProduct] = useState(false);
   const [currentImage, setCurrentImage] = useState("");
   const { currency } = useShopContext();
-  const [ProductSize, setProductSize] = useState("")
+  const [ProductSize, setProductSize] = useState("");
+  const { cartItems, setCartItems, addToCart } = useCart();
 
   const fetchProductDetails = async () => {
     products.map((item) => {
@@ -26,7 +28,6 @@ const Products = () => {
   useEffect(() => {
     fetchProductDetails();
   }, [products, productId]);
-
   return currentProduct ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
       {/**product data */}
@@ -88,7 +89,7 @@ const Products = () => {
               </div>
             </div>
             <div className="mt-4">
-              <button className="bg-slate-900 rounded-sm text-white p-3 active:bg-slate-600">
+              <button className="bg-slate-900 rounded-sm text-white p-3 active:bg-slate-600" onClick={()=>addToCart(currentProduct._id,ProductSize)}>
                 ADD TO CART
               </button>
             </div>
