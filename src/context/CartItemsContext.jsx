@@ -5,6 +5,7 @@ const CartItemsContext = createContext();
 
 export const CartItemsContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
+  const [ProductSize, setProductSize] = useState("");
 
   const addToCart = async (itemId, size) => {
     if (!size) {
@@ -23,6 +24,8 @@ export const CartItemsContextProvider = ({ children }) => {
       cartData[itemId] = { [size]: 1 };
     }
     setCartItems(cartData);
+    console.log('cart items',cartItems);
+    
   };
 
   const getTotalProductsInCart = () => {
@@ -48,7 +51,7 @@ export const CartItemsContextProvider = ({ children }) => {
 
   return (
     <CartItemsContext.Provider
-      value={{ cartItems, setCartItems, addToCart, getTotalProductsInCart }}
+      value={{ cartItems, setCartItems, addToCart, getTotalProductsInCart,ProductSize, setProductSize }}
     >
       {children}
     </CartItemsContext.Provider>

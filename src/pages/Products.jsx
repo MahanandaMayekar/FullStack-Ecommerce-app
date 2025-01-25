@@ -11,15 +11,22 @@ const Products = () => {
   const [currentProduct, setCurrentProduct] = useState(false);
   const [currentImage, setCurrentImage] = useState("");
   const { currency } = useShopContext();
-  const [ProductSize, setProductSize] = useState("");
-  const { cartItems, setCartItems, addToCart } = useCart();
+ // const [ProductSize, setProductSize] = useState("");
+  const {
+    cartItems,
+    setCartItems,
+    addToCart,
+    ProductSize,
+    setProductSize,
+  } = useCart();
 
   const fetchProductDetails = async () => {
-    products.map((item) => {
+    products?.map((item) => {
       if (item._id === productId) {
         console.log(item);
 
-        setCurrentProduct(item);
+        setCurrentProduct(item)
+        
         setCurrentImage(item.image[0]);
         null;
       }
