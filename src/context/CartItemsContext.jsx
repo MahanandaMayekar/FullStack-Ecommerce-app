@@ -32,7 +32,7 @@ export const CartItemsContextProvider = ({ children }) => {
     let totalCount = 0;
     for (let productId in cartItems) {
       let productsSizes = cartItems[productId];
-      console.log("'product sizes", productsSizes);
+      //console.log("'product sizes", productsSizes);
       {
         /**
                  * 
