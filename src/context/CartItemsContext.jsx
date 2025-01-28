@@ -24,6 +24,7 @@ export const CartItemsContextProvider = ({ children }) => {
       cartData[itemId] = { [size]: 1 };
     }
     setCartItems(cartData);
+    toast.success("Product added to Cart")
     console.log('cart items',cartItems);
     
   };
