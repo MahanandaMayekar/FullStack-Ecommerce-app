@@ -56,10 +56,11 @@ export const Navbar = () => {
       <div className="flex items-center gap-6 justify-center cursor-pointer ">
         <IoSearch size="25" onClick={handleDiaplySearchBar} />
         <div className="group relative">
-          <Menubar className="border-none ">
+          <Menubar className=" ">
             <MenubarMenu>
               <MenubarTrigger>
-                <CgProfile size="25" />
+                <CgProfile size="25"  /> 
+                <span className='pl-3 font-semibold'>Login</span>
               </MenubarTrigger>
               <MenubarContent>
                 <MenubarItem>My Profile</MenubarItem>

@@ -4,12 +4,13 @@ import NotFoundPage from "../pages/NotFoundPage";
 import About from "./../pages/About";
 import Contact from "./../pages/Contact";
 import Layout from "./../pages/Layout";
-import Login from "./../pages/Login";
+import Login from "../pages/Login/Login";
 import Orders from "./../pages/Orders";
 import Products from "./../pages/Products";
 import CollectionContainer from '@/pages/collection/CollectionContainer';
 import CartContainer from '@/pages/cart/CartContainer';
 import PlaceOrderContainer from './../pages/place-order/PlaceOrderContainer';
+import LoginContainer from '@/pages/Login/LoginContainer';
 
 const AppRoutes = () => {
   return (
@@ -23,7 +24,7 @@ const AppRoutes = () => {
           <Route path="/orders" element={<Orders />} />
           <Route path="/cart" element={<CartContainer />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LoginContainer />} />
           <Route path="/place-order" element={<PlaceOrderContainer />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
