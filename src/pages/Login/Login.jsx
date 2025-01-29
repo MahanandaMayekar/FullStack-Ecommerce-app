@@ -4,7 +4,7 @@ const Login = ({ currentState, setCurrentState, handleFormSubmit }) => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="flex flex-col justify-center items-center w-full sm:max-w-96  m-auto gap-2 "
+      className="flex flex-col justify-center items-center w-full sm:max-w-96  m-auto gap-2  mt-20 mb-32 "
     >
       <div className="flex items-center justify-center gap-2">
         <p className="text-3xl">{currentState}</p>
@@ -53,7 +53,7 @@ const Login = ({ currentState, setCurrentState, handleFormSubmit }) => {
           </p>
         )}
       </div>
-      <button className="bg-black text-white p-3 rounded-sm active:bg-slate-700 mt-6 ">
+      <button className="bg-black text-white p-3 rounded-sm active:bg-slate-700 mt-6 w-40">
         {currentState === "Login" ? "Login" : "Sign Up"}
       </button>
     </form>
