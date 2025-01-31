@@ -1,5 +1,5 @@
-import { CrudRepository } from './CrudRepository';
-import { User } from '../schema/UserSchema';
+import { CrudRepository } from './CrudRepository.js';
+import { User } from '../schema/UserSchema.js';
 
 export const UserRepository = {
     ...CrudRepository(User),
@@ -8,9 +8,9 @@ export const UserRepository = {
         return user
     },
     registerUser: async (data) => {
-        newUser = new User(data)
-        await newUser.save()
-        return newUser
+        const newUser = new User(data)
+        const updatedUser= await newUser.save()
+        return updatedUser
     }
 
 }

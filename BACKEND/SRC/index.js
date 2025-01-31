@@ -3,11 +3,14 @@ import cors from 'cors'
 import { PORT } from './config/serverConfig.js'
 import { ConnectToMongoDb } from './config/DbConfig.js'
 import { ConnectToCloudinary } from './config/cloudinaryConfig.js'
+import ApiRoute from './routes/ApiRoute.js'
+
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors())
+app.use("/api",ApiRoute )
 
 app.get("/", (req, res) => {
     res.json({
