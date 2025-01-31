@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import { PORT } from './config/serverConfig.js'
 import { ConnectToMongoDb } from './config/DbConfig.js'
-
+import { ConnectToCloudinary } from './config/cloudinaryConfig.js'
 const app = express()
 
 app.use(express.json())
@@ -19,5 +19,6 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
     console.log("server is listening on port", PORT);
     ConnectToMongoDb()
+    ConnectToCloudinary()
     
 })
