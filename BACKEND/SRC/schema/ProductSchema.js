@@ -26,10 +26,16 @@ import mongoose from 'mongoose'
         required:[true,"subCategory is required"]
     },
     bestSeller: {
-        type: String
+        type: Boolean,
+        required:true
+        
+     },
+     sizes: {
+         type: Array,
+        required:[true,"sizes are required"]
         
     }
     
- }, { timestamps })
+ }, { timestamps:true })
 
  export const Product=mongoose.model("Product",ProductSchema)
