@@ -4,7 +4,6 @@ import { v2 as cloudinary } from "cloudinary";
 import ClientError from "./../utils/errors/ClientError.js";
 import { StatusCodes } from "http-status-codes";
 
-CustomError;
 export const addProductService = async (ProductData, imageData) => {
   try {
     const {
@@ -55,8 +54,7 @@ export const addProductService = async (ProductData, imageData) => {
       bestSeller: bestSeller === "true",
       sizes: JSON.parse(sizes),
       image: imageUrls,
-    });   
-      
+    });
 
     return product;
   } catch (error) {
@@ -64,6 +62,21 @@ export const addProductService = async (ProductData, imageData) => {
     throw new CustomError({
       message: error.message,
       explanation: "error in creating product",
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    });
+  }
+};
+
+export const fetchAllProductsService = async () => {
+  try {
+    const allProducts = await productRepository.findAll();
+    //console.log("all products", allProducts);
+    return allProducts;
+  } catch (error) {
+    console.log("error in fetching all the product", error);
+    throw new CustomError({
+      message: error.message,
+      explanation: "error in fetching all the product",
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     });
   }

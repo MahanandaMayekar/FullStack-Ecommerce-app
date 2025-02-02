@@ -1,5 +1,5 @@
 import express from 'express'
-import { addProductController } from '../controllers/ProductController.js'
+import { addProductController, fetchAllProductsController } from '../controllers/ProductController.js'
 import { upload } from '../middleware/MulterMiddleware.js'
 
 
@@ -10,6 +10,8 @@ Router.post('/add', upload.fields([
   { name: 'image3', maxCount: 1 },
   { name: 'image4', maxCount: 1 },
 ]), addProductController);
+
+Router.get("/list-products", fetchAllProductsController);
 
 
 

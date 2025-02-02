@@ -1,7 +1,8 @@
 import { StatusCodes } from "http-status-codes";
-import { addProductService } from "../service/ProductService.js";
+import { addProductService, fetchAllProductsService } from "../service/ProductService.js";
 import { SuccessResponse } from "./../utils/common/SuccessResponse.js";
-
+import ClientError from '../utils/errors/ClientError.js';
+import CustomError from '../utils/errors/CustomError.js';
 export const addProductController = async (req, res) => {
   try {
     //console.log("req.body", req.body);
@@ -29,3 +30,38 @@ export const addProductController = async (req, res) => {
       });
   }
 };
+
+
+export const fetchAllProductsController = async (req,res) => {
+  try {
+    const allProductsResponse = await fetchAllProductsService();
+     return res
+       .status(StatusCodes.OK)
+       .json(
+         SuccessResponse(
+           "Successfully fetched all the products",
+           allProductsResponse
+         )
+       );
+    
+    
+  } catch (error) {
+    console.log("err in fetching all products in controller", error);
+
+    if (error instanceof ClientError || error instanceof CustomError) {
+      return res.status(error.statusCode).json({
+        success: false,
+        message: error.message,
+        explanation: error.explanation,
+      });
+    }
+
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      error: error.message,
+      data: {},
+      message: "Internal server error",
+    });
+    
+  }
+}
