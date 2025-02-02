@@ -1,5 +1,5 @@
 import express from 'express'
-import { addProductController, fetchAllProductsController } from '../controllers/ProductController.js'
+import { addProductController, deleteProductsController, fetchAllProductsController } from '../controllers/ProductController.js'
 import { upload } from '../middleware/MulterMiddleware.js'
 
 
@@ -12,6 +12,7 @@ Router.post('/add', upload.fields([
 ]), addProductController);
 
 Router.get("/list-products", fetchAllProductsController);
+Router.delete("/deleteProduct/:productId", deleteProductsController);
 
 
 

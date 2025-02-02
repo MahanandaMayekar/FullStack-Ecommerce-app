@@ -81,3 +81,34 @@ export const fetchAllProductsService = async () => {
     });
   }
 };
+
+export const deleteProductsService = async (productId) => {
+  try {
+
+    if (!productId) {
+     throw new ClientError({
+       message: " productId is required",
+       explanation: "productId not found",
+       statusCode: StatusCodes.NOT_FOUND,
+     });
+    }
+    const deletedProduct = await productRepository.deleteById(productId);
+
+    if (!deletedProduct) {
+       throw new ClientError({
+         message: " Product not found or already deleted",
+         explanation: "Invalid productId or product does not exist",
+         statusCode: StatusCodes.NOT_FOUND,
+       });
+    }
+    //console.log("all products", allProducts);
+    return deletedProduct;
+  } catch (error) {
+    console.log("error in deleting the product", error);
+    throw new CustomError({
+      message: error.message,
+      explanation: "error in deleting the product",
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    });
+  }
+};
