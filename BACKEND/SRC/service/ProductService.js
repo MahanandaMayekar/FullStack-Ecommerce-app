@@ -89,7 +89,7 @@ export const deleteProductsService = async (productId) => {
      throw new ClientError({
        message: " productId is required",
        explanation: "productId not found",
-       statusCode: StatusCodes.NOT_FOUND,
+       statusCode: StatusCodes.BAD_REQUEST,
      });
     }
     const deletedProduct = await productRepository.deleteById(productId);
@@ -112,3 +112,34 @@ export const deleteProductsService = async (productId) => {
     });
   }
 };
+
+export const findProductByIdService = async (productId) => {
+  try {
+    if (!productId) {
+      throw new ClientError({
+        message: " productId is required",
+        explanation: "productId not found",
+        statusCode: StatusCodes.BAD_REQUEST,
+      });
+    }
+    const product = await productRepository.findById(productId)
+    if (!product) {
+      throw new ClientError({
+        message: " Product you are trying to fetch is  not found ",
+        explanation: "Product does not exist",
+        statusCode: StatusCodes.NOT_FOUND,
+      });
+    }
+
+    return product
+    
+  } catch (error) {
+    console.log("error in fetching  product by id", error);
+    throw new CustomError({
+      message: error.message,
+      explanation: "error in fetching  product by id",
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    });
+    
+  }
+}

@@ -1,7 +1,7 @@
 import express from 'express'
-import { addProductController, deleteProductsController, fetchAllProductsController } from '../controllers/ProductController.js'
+import { addProductController, deleteProductsController, fetchAllProductsController, fetchProductByIdController } from '../controllers/ProductController.js'
 import { upload } from '../middleware/MulterMiddleware.js'
-
+fetchProductByIdController
 
 const Router = express.Router()
 Router.post('/add', upload.fields([
@@ -13,6 +13,7 @@ Router.post('/add', upload.fields([
 
 Router.get("/list-products", fetchAllProductsController);
 Router.delete("/deleteProduct/:productId", deleteProductsController);
+Router.get("/:productId", fetchProductByIdController);
 
 
 
