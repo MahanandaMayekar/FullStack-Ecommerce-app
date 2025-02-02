@@ -12,8 +12,9 @@ import CustomError from "../utils/errors/CustomError.js";
 export const addProductController = async (req, res) => {
   try {
     //console.log("req.body", req.body);
+ const ownerId=req.user._id
 
-    const ProductResponse = await addProductService(req.body, req.files);
+    const ProductResponse = await addProductService(ownerId,req.body, req.files);
     return res
       .status(StatusCodes.CREATED)
       .json(SuccessResponse("Product created successfully", ProductResponse));

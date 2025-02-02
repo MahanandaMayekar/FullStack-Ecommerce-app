@@ -4,7 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 import ClientError from "./../utils/errors/ClientError.js";
 import { StatusCodes } from "http-status-codes";
 
-export const addProductService = async (ProductData, imageData) => {
+export const addProductService = async (owrnerId,ProductData, imageData) => {
   try {
     const {
       name,
@@ -54,9 +54,12 @@ export const addProductService = async (ProductData, imageData) => {
       bestSeller: bestSeller === "true",
       sizes: JSON.parse(sizes),
       image: imageUrls,
+      owner:owrnerId
     });
 
-    return product;
+    const productWithDetails=await productRepository.getProductWithDetails(product._id)
+
+    return productWithDetails;
   } catch (error) {
     console.log("error in creating product", error);
     throw new CustomError({

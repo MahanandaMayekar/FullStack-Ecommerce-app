@@ -3,5 +3,10 @@ import { Product } from './../schema/ProductSchema.js';
 
 
 export const productRepository = {
-  ...CrudRepository(Product)
+  ...CrudRepository(Product),
+  getProductWithDetails: async (id) => {
+    const product = await Product.findById(id).populate("owner", "name email role")
+    return product
+    
+  }
 };

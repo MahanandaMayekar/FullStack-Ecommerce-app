@@ -44,7 +44,7 @@ export const userLoginController = async (req,res) => {
     if (error instanceof ClientError || error instanceof CustomError) {
       return res.status(error.statusCode).json({
         success: false,
-        message: error.message,
+        message: error.message.message,
         explanation: error.explanation,
       });
     }
