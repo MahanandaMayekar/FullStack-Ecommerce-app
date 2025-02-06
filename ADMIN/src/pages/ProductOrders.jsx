@@ -2,7 +2,8 @@ import React from 'react'
 
 const ProductOrders = () => {
   return (
-    <div>
+    <div className='flex justify-center items-center'>
+      <p>product</p>
       
     </div>
   )
