@@ -1,6 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Prata&family=Sedgwick+Ave&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+  font-family: PT Serif;
+}
+.active{
+  background-color:rgb(251, 233, 243);
+  border: 1px solid brown;
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
