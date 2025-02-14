@@ -43,18 +43,18 @@ export const AdminAuthMiddleware = async (req, res, next) => {
       console.log("user in admin mid", user);
       
       if (user.role !== "admin") {
-           return res.status(StatusCodes.FORBIDDEN).json({
-             success: false,
-             message: "Access denied",
-             explanation: "User does not have admin privileges",
-           });
+        throw new ClientError({
+          message: "Access denied",
+          explanation: "User does not have admin privileges",
+          statusCode: StatusCodes.FORBIDDEN,
+        });                  
        }
       
       req.user = user
       next()
 
   } catch (error) {
-      console.log("error in auth admin middleware", error);
+      console.log("error in auth admin middleware", error.message);
       if (
         error instanceof ClientError ||
         error.name === "JsonWebTokenError" ||

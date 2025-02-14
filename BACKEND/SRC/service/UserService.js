@@ -95,7 +95,7 @@ export const UserLogin = async (userData) => {
 
     
   } catch (error) {
-    console.log("error in login", error);
+    console.log("error in login", error.message);
     throw new CustomError({
       message: error.message,
       explanation: "User login failed",

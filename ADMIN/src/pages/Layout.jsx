@@ -1,16 +1,17 @@
-import Login from '@/components/Login';
+import LoginContainer from '@/components/Login/LoginContainer';
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
+import { useAuth } from '@/hooks/useAuth';
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-Login
+
 
 const Layout = () => {
-  const [token,setToken]=useState("")
+  const{auth}=useAuth()
   return (
     <div className="flex flex-col h-screen">
-      {token === "" ? (
-        <Login />
+      {auth.token === "" ? (
+        <LoginContainer />
       ) : (
         <>
           <Navbar />
