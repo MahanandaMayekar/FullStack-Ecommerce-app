@@ -26,12 +26,23 @@ export const authContextProvider = ({ children }) => {
             
         }
         
-    },[])
+    }, [])
+    
+    async function Logout() {
+        localStorage.removeItem("user")
+        localStorage.removeItem("token")
+        setAuth({
+          user: null,
+          token: null,
+        });
+
+    
+    }
     return (
-        <authContext.Provider value={{auth,setAuth}}>
-            {children}
-        </authContext.Provider>
-    )
+      <authContext.Provider value={{ auth, setAuth, Logout }}>
+        {children}
+      </authContext.Provider>
+    );
     
 }
 export default authContext
