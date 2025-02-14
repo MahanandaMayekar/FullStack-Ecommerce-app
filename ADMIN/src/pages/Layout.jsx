@@ -10,7 +10,7 @@ const Layout = () => {
   const{auth}=useAuth()
   return (
     <div className="flex flex-col h-screen">
-      {auth.token === "" ? (
+      {auth.token ===null ? (
         <LoginContainer />
       ) : (
         <>

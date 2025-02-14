@@ -8,6 +8,6 @@ const Router = express.Router()
 
 Router.post("/register", registerUserController)
 Router.post("/Login", userLoginController)
-Router.post("/Login/admin", AdminAuthMiddleware,userLoginController);
+Router.post("/Login/admin",userLoginController);
 
 export default Router
