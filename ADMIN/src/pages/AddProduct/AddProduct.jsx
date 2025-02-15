@@ -1,6 +1,7 @@
 import { assets } from "@/assets/assets";
+import useAddProduct from '@/hooks/useAddProduct';
+import { Loader } from 'lucide-react';
 import React from "react";
-
 
 const AddProduct = ({
   images,
@@ -9,7 +10,9 @@ const AddProduct = ({
   setProductInfo,
   handleSizeSelection,
   onSubmitHandler,
+  
 }) => {
+  const{isLoading}=useAddProduct()
   return (
     <form className="flex flex-col gap-3 mb-10" onSubmit={onSubmitHandler}>
       <div className="sm:w-full w-2/3">
@@ -230,19 +233,25 @@ const AddProduct = ({
           onChange={() =>
             setProductInfo((prev) => ({
               ...prev,
-              bestsellor: !prev.bestsellor,
+              bestSellor: !prev.bestSellor,
             }))
           }
-          checked={productInfo.bestsellor}
+          checked={productInfo.bestSellor}
         />
         <label htmlFor="bestSeller">Add to bestSeller</label>
       </div>
       <div className="flex w-full mt-2 ">
         <button
+          disabled={isLoading}
           type="submit"
-          className="bg-black text-white p-3 rounded-sm active:bg-slate-700 "
+          className="bg-black text-white p-3 rounded-sm active:bg-slate-700 w-[200px] flex justify-center items-center"
         >
-          ADD PRODUCT
+          {isLoading ? (
+            //<Loader className=" animate-spin rotate-180 " />
+          "submitting please wait"
+          ) : (
+            "ADD PRODUCT"
+          )}
         </button>
       </div>
     </form>
