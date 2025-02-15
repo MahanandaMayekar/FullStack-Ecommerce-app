@@ -10,18 +10,18 @@ const Layout = () => {
   const{auth}=useAuth()
   return (
     <div className="flex flex-col h-screen">
-      {auth.token ===null ? (
+      {auth.token === null ? (
         <LoginContainer />
       ) : (
         <>
           <Navbar />
 
           <div className="flex flex-1">
-            <div className="w-64 ">
+            <div className="sm:w-64 w-28 ">
               <Sidebar />
             </div>
 
-            <div className="flex-1  overflow-auto">
+            <div className="flex-1  overflow-auto sm:ml-20 mt-28">
               <Outlet />
             </div>
           </div>
