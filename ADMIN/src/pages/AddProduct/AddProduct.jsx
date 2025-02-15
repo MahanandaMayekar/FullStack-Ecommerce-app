@@ -2,9 +2,16 @@ import { assets } from "@/assets/assets";
 import React from "react";
 
 
-const AddProduct = ({ images, setimages }) => {
+const AddProduct = ({
+  images,
+  setimages,
+  productInfo,
+  setProductInfo,
+  handleSizeSelection,
+  onSubmitHandler,
+}) => {
   return (
-    <form className="flex flex-col gap-3 mb-10">
+    <form className="flex flex-col gap-3 mb-10" onSubmit={onSubmitHandler}>
       <div className="sm:w-full w-2/3">
         <p>Upload images</p>
         <div className="flex gap-6 mt-4 w-full">
@@ -93,6 +100,10 @@ const AddProduct = ({ images, setimages }) => {
           placeholder="Type here..."
           className="sm:w-[50%] w-3/4 p-2 border-2 outline-[brown]"
           required
+          onChange={(e) =>
+            setProductInfo({ ...productInfo, name: e.target.value })
+          }
+          value={productInfo.name}
         />
       </div>
       <div className="flex flex-col gap-2 mt-4">
@@ -102,6 +113,10 @@ const AddProduct = ({ images, setimages }) => {
           placeholder="Write your content here....."
           className="sm:w-[50%] w-3/4 p-2 border-2 outline-[brown]"
           required
+          onChange={(e) =>
+            setProductInfo({ ...productInfo, description: e.target.value })
+          }
+          value={productInfo.description}
         />
       </div>
 
@@ -112,6 +127,9 @@ const AddProduct = ({ images, setimages }) => {
             name=""
             id=""
             className="sm:w-48 w-3/4 p-2 border-2 outline-[brown]"
+            onChange={(e) =>
+              setProductInfo({ ...productInfo, category: e.target.value })
+            }
           >
             <option value="Men">Men</option>
             <option value="Women">Women</option>
@@ -120,7 +138,12 @@ const AddProduct = ({ images, setimages }) => {
         </div>
         <div>
           <p className="mb-2">Sub category</p>
-          <select className="sm:w-48 w-3/4 p-2 border-2 outline-[brown]">
+          <select
+            className="sm:w-48 w-3/4 p-2 border-2 outline-[brown]"
+            onChange={(e) =>
+              setProductInfo({ ...productInfo, subCategory: e.target.value })
+            }
+          >
             <option value="Topwear">Topwear</option>
             <option value="Bottomwear">Bottomwear</option>
             <option value="Winterwear">Winterwear</option>
@@ -133,6 +156,9 @@ const AddProduct = ({ images, setimages }) => {
             placeholder="400"
             className="sm:w-48 w-3/4 p-2 border-2 outline-[brown]"
             required
+            onChange={(e) =>
+              setProductInfo({ ...productInfo, price: e.target.value })
+            }
           />
         </div>
       </div>
@@ -140,35 +166,75 @@ const AddProduct = ({ images, setimages }) => {
       <div className="mt-4">
         <p className="mb-2">Product Sizes</p>
         <div className="flex gap-5 ">
-          <div>
-            <p className="bg-slate-200 w-10 h-10 flex justify-center items-center text-md font-semibold cursor-pointer p-1">
+          <div onClick={() => handleSizeSelection("S")}>
+            <p
+              className={`${
+                productInfo.sizes.includes("S")
+                  ? "bg-slate-400 border border-slate-500 "
+                  : "bg-slate-200"
+              } w-10 h-10 flex justify-center items-center font-semibold cursor-pointer p-1`}
+            >
               S
             </p>
           </div>
-          <div>
-            <p className="bg-slate-200 w-10 h-10 flex justify-center items-center text-md font-semibold cursor-pointer p-1">
+          <div onClick={() => handleSizeSelection("M")}>
+            <p
+              className={`${
+                productInfo.sizes.includes("M")
+                  ? "bg-slate-400 border border-slate-500"
+                  : "bg-slate-200"
+              } w-10 h-10 flex justify-center items-center font-semibold cursor-pointer p-1`}
+            >
               M
             </p>
           </div>
-          <div>
-            <p className="bg-slate-200 w-10 h-10 flex justify-center items-center text-md font-semibold cursor-pointer p-1">
+          <div onClick={() => handleSizeSelection("L")}>
+            <p
+              className={`${
+                productInfo.sizes.includes("L")
+                  ? "bg-slate-400 border border-slate-500"
+                  : "bg-slate-200"
+              } w-10 h-10 flex justify-center items-center font-semibold cursor-pointer p-1`}
+            >
               L
             </p>
           </div>
-          <div>
-            <p className="bg-slate-200 w-10 h-10 flex justify-center items-center text-md font-semibold cursor-pointer p-1">
+          <div onClick={() => handleSizeSelection("XL")}>
+            <p
+              className={`${
+                productInfo.sizes.includes("XL")
+                  ? "bg-slate-400 border border-slate-500"
+                  : "bg-slate-200"
+              } w-10 h-10 flex justify-center items-center font-semibold cursor-pointer p-1`}
+            >
               XL
             </p>
           </div>
-          <div>
-            <p className="bg-slate-200 w-10 h-10 flex justify-center items-center font-semibold cursor-pointer p-1">
+          <div onClick={() => handleSizeSelection("XXL")}>
+            <p
+              className={`${
+                productInfo.sizes.includes("XXL")
+                  ? "bg-slate-400 border border-slate-500"
+                  : "bg-slate-200"
+              } w-10 h-10 flex justify-center items-center font-semibold cursor-pointer p-1`}
+            >
               XXL
             </p>
           </div>
         </div>
       </div>
       <div className="flex gap-3 mt-4 items-center">
-        <input type="checkbox" className="w-4 p-4 h-4" />
+        <input
+          type="checkbox"
+          className="w-4 p-4 h-4"
+          onChange={() =>
+            setProductInfo((prev) => ({
+              ...prev,
+              bestsellor: !prev.bestsellor,
+            }))
+          }
+          checked={productInfo.bestsellor}
+        />
         <label htmlFor="bestSeller">Add to bestSeller</label>
       </div>
       <div className="flex w-full mt-2 ">
