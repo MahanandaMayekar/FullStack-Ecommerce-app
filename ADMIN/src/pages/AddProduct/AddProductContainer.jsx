@@ -58,8 +58,10 @@ const AddProductContainer = () => {
       if (images.image4) formData.append("image4", images.image4);
 
       await addProductMutation({ token: auth?.token, formData: formData });
+      toast("Product added successfully");
     } catch (error) {
-      console.log("error in submitting form", error);
+      toast.error("Failed to add Product");
+      console.log("error in submitting form"|| error.message);
     }
    
   }
@@ -83,7 +85,7 @@ const AddProductContainer = () => {
         image4: null,
       });
 
-      toast("Product added successfully");
+      
     }
   }, [isSuccess]); 
   return (
