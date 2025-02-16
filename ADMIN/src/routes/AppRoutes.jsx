@@ -1,9 +1,10 @@
 import Layout from '@/pages/Layout'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import ListProducts from '@/pages/ListProducts'
 import ProductOrders from '@/pages/ProductOrders'
 import AddProductContainer from '@/pages/AddProduct/AddProductContainer'
+import ListProductContainer from '@/pages/ListProducts/ListProductContainer'
+
 
 
 const AppRoutes = () => {
@@ -11,7 +12,7 @@ const AppRoutes = () => {
     <div>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="list" element={<ListProducts />} />
+          <Route path="list" element={<ListProductContainer />} />
           <Route path="orders" element={<ProductOrders />} />
           <Route path="add" element={<AddProductContainer />} />
         </Route>

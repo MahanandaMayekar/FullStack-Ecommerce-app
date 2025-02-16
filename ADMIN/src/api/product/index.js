@@ -35,8 +35,8 @@ export const fetchAllProductsRequest = async ({token}) => {
         }
       }
     );
-    console.log("Successfully fetched all the product", response);
-    return response
+    console.log("Successfully fetched all the product", response.data.Response);
+    return response.data.Response;
     
   } catch (error) {
     console.error("error in fetching all products", error.response);
