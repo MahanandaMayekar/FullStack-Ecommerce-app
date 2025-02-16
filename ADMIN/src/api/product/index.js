@@ -47,3 +47,27 @@ export const fetchAllProductsRequest = async ({token}) => {
     
   }
 }
+
+
+export const deleteProductByIdRequest = async({productId,token}) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:8000/api/products/deleteProduct/${productId}`,
+      {
+        headers: {
+          "x-access-token": token,
+        },
+      }
+    );
+     console.log(
+       "Successfully deleted the product",
+       response.data.Response
+     );
+     return response.data.Response;
+    
+  } catch (error) {
+    console.error("error in deleting the product by id", error.response);
+    throw new Error(error.response || "failed to delete the product.");
+    
+  }
+}
