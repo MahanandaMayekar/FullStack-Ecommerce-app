@@ -24,3 +24,26 @@ export const addProductRequest = async ({ token, formData }) => {
     );
   }
 };
+
+
+export const fetchAllProductsRequest = async ({token}) => {
+  try {
+    const response = await axios.get(
+      "http://localhost:8000/api/products/list-products", {
+        headers: {
+          "x-access-token":token
+        }
+      }
+    );
+    console.log("Successfully fetched all the product", response);
+    return response
+    
+  } catch (error) {
+    console.error("error in fetching all products", error.response);
+    throw new Error(
+      error.response ||
+        "failed to fetch all the products."
+    );
+    
+  }
+}
