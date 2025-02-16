@@ -12,8 +12,8 @@ const useAddProduct = () => {
                 console.log("successfully added product", data);
 
             },
-            onError: () => {
-                console.log("error in adding product", error);
+            onError: (error) => {
+                console.log("error in adding product", error.message);
 
             }
         })
