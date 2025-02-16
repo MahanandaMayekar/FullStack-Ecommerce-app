@@ -2,11 +2,18 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { Delete } from "lucide-react";
 import React from "react";
 
-const ProductItem = ({ image, name, category, price }) => {
+const ProductItem = ({
+  image,
+  name,
+  category,
+  price,
+  handleDeleteProduct,
+  productId,
+}) => {
   const currency = "$";
   return (
     <div className="grid  grid-cols-5  items-center gap-4  sm:gap-12 border p-5 mt-2 mb-2 text-xs sm:text-lg ">
-      <img src={image} alt="" className="w-16 sm:w-20" />
+      <img src={image} alt="" className="w-16 sm:w-20" loading='lazy'/>
 
       <p className=" sm:text-lg font-medium truncate  ">{name}</p>
       <p className=" sm:text-left text-gray-600 ">{category}</p>
@@ -42,7 +49,10 @@ const ProductItem = ({ image, name, category, price }) => {
                   </button>
                 </AlertDialog.Cancel>
                 <AlertDialog.Action asChild>
-                  <button className="px-4 py-2 bg-red-600 text-white rounded">
+                  <button
+                    className="px-4 py-2 bg-red-600 text-white rounded"
+                    onClick={() => handleDeleteProduct(productId)}
+                  >
                     Yes, delete
                   </button>
                 </AlertDialog.Action>

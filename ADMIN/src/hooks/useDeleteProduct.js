@@ -16,7 +16,10 @@ const useDeleteProduct = () => {
       console.log("successfully deleted the product", data);
     },
     onError: (error) => {
-      console.log("error in deleting the product", error.message);
+      console.log(
+        "error in deleting the product",
+        error?.data || error.message || error
+      );
     },
   });
   return {

@@ -66,7 +66,7 @@ export const deleteProductByIdRequest = async({productId,token}) => {
      return response.data.Response;
     
   } catch (error) {
-    console.error("error in deleting the product by id", error.response);
+    console.error("error in deleting the product by id", error.data);
     throw new Error(error.response || "failed to delete the product.");
     
   }
