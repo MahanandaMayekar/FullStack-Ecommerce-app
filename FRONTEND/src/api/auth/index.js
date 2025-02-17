@@ -10,10 +10,10 @@ export const loginRequest = async ({email,password}) => {
         return response.data.Response;
         
     } catch (error) {
-        console.log("error in login",error.response.data);
+        console.log("error in login",error.response.data.message);
         throw new Error(
           "error in login ",
-          error.response.data || "failed to log in"
+          error.response.data.message || "failed to log in"
         );
         
         
