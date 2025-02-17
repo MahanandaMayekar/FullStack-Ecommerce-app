@@ -1,6 +1,12 @@
 import React from 'react'
 
-const Login = ({ currentState, setCurrentState, handleFormSubmit }) => {
+const Login = ({
+  currentState,
+  setCurrentState,
+  handleFormSubmit,
+  signin,
+  setSignin,
+}) => {
   return (
     <form
       onSubmit={handleFormSubmit}
@@ -26,12 +32,16 @@ const Login = ({ currentState, setCurrentState, handleFormSubmit }) => {
         placeholder="email"
         className="border-2 w-full p-2"
         required
+        value={signin.email}
+        onChange={(e) => setSignin({ ...signin, email: e.target.value })}
       />
       <input
         type="password"
         placeholder="Password"
         className="border-2 w-full p-2"
         required
+        value={signin.password}
+        onChange={(e) => setSignin({ ...signin, password: e.target.value })}
       />
       <div className="flex flex-row items-center w-full justify-between">
         <p className="text-blue-700 text-sm hover:underline">

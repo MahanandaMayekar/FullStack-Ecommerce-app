@@ -64,6 +64,7 @@ export const Navbar = () => {
                 <span className="pl-3 font-semibold">Login</span>
               </MenubarTrigger>
               <MenubarContent>
+                <MenubarItem>Login </MenubarItem>
                 <MenubarItem>My Profile</MenubarItem>
                 <MenubarItem onClick={() => navigate("/orders")}>
                   My Orders
