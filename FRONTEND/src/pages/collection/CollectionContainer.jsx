@@ -1,10 +1,12 @@
 import React from "react";
 import Collections from "./Collections";
-import { useAssets } from "@/hooks/assets/useAssets";
+
 import { useEffect, useState } from "react";
 import { useShopContext } from '@/hooks/context/useShopContext';
+import useFetchAllProducts from '@/hooks/products/useFetchAllProducts';
+
 const CollectionContainer = () => {
-    const { products } = useAssets();
+     const { productList } = useFetchAllProducts();
     const [showFilter, setShowFilter] = useState(false);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [category, setCategory] = useState([]);
@@ -14,7 +16,7 @@ const CollectionContainer = () => {
 
     useEffect(() => {
       applyFilter();
-    }, [category, type, search, showsearchBar]);
+    }, [category, type, search, showsearchBar, productList]);
     useEffect(() => {
         sortProducts();
     }, [sortType]);
@@ -38,7 +40,8 @@ const CollectionContainer = () => {
     }
 
     function applyFilter() {
-        let productCopy = products.slice();
+        if(! productList) return
+        let productCopy = productList.slice();
 
         if (type.length > 0) {
             productCopy = productCopy.filter((item) =>

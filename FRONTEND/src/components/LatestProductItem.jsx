@@ -11,10 +11,10 @@ const LatestProductItem = ({ productId, image, name, price }) => {
           <img
             src={image[0]}
             alt=""
-            className="transition-all duration-300 ease-in-out transform hover:scale-105 hover:opacity-90"
+            className="w-72 h-72 object-cover transition-all duration-300 ease-in-out transform hover:scale-105 hover:opacity-90" loading='lazy'
           />
         </div>
-        <p>{name}</p>
+        <p className='truncate'>{name}</p>
         <p>
           {currency}
           {price}

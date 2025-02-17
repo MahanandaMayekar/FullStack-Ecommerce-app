@@ -2,17 +2,19 @@ import { useAssets } from '@/hooks/assets/useAssets'
 import React, { useEffect, useState } from 'react'
 import Title from './Title';
 import LatestProductItem from './LatestProductItem';
+import useFetchAllProducts from '@/hooks/products/useFetchAllProducts';
 
 
 
-const RelatedProducts = ({ category, subCategory}) => {
+const RelatedProducts = ({ category, subCategory }) => {
+  const { productList } = useFetchAllProducts();
   const { products } = useAssets();
   const [relatedProducts, setRelatedProducts] = useState([]);
   //console.log("relatedProducts", relatedProducts);
 
   useEffect(() => {
-    if (products.length > 0) {
-      let productCopy = products.slice();
+    if (productList.length > 0) {
+      let productCopy = productList.slice();
       let filteredProduct = productCopy.filter(
         (product) =>
           product.category === category && product.subCategory === subCategory
@@ -20,7 +22,7 @@ const RelatedProducts = ({ category, subCategory}) => {
       //console.log("related filtered products", filteredProduct);
       setRelatedProducts(filteredProduct.slice(0, 10));
     }
-  }, [products]);
+  }, [productList]);
     return (
       <div className="m-5 my-10">
         <div className="py-8">

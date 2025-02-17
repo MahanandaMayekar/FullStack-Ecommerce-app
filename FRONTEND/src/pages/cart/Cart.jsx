@@ -2,15 +2,13 @@ import CartTotal from '@/components/CartTotal';
 import Title from '@/components/Title'
 import { useAssets } from '@/hooks/assets/useAssets';
 import { useShopContext } from '@/hooks/context/useShopContext';
+import useFetchAllProducts from '@/hooks/products/useFetchAllProducts';
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
-
-
-
-
 const Cart = ({ cartData, removeItemFromCart }) => {
-  const { products, assets } = useAssets();
+  const { productList } = useFetchAllProducts();
+  const {assets } = useAssets();
   const { currency } = useShopContext();
   const navigate=useNavigate()
   return (
@@ -20,7 +18,7 @@ const Cart = ({ cartData, removeItemFromCart }) => {
       </div>
       <div>
         {cartData.map((item, index) => {
-          const productData = products.find(
+          const productData = productList.find(
             (product) => product._id === item._id
           );
           return (

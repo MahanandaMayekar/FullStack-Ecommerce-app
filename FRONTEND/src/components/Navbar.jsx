@@ -17,6 +17,7 @@ import { useShopContext } from '@/hooks/context/useShopContext';
 import useCart from '@/hooks/context/useCart';
 
 
+
 export const Navbar = () => {
   const { assets } = useAssets()
   const navigate = useNavigate()
@@ -59,12 +60,14 @@ export const Navbar = () => {
           <Menubar className=" ">
             <MenubarMenu>
               <MenubarTrigger>
-                <CgProfile size="25"  /> 
-                <span className='pl-3 font-semibold'>Login</span>
+                <CgProfile size="25" />
+                <span className="pl-3 font-semibold">Login</span>
               </MenubarTrigger>
               <MenubarContent>
                 <MenubarItem>My Profile</MenubarItem>
-                <MenubarItem>Orders</MenubarItem>
+                <MenubarItem onClick={() => navigate("/orders")}>
+                  My Orders
+                </MenubarItem>
                 <MenubarSeparator />
                 <MenubarItem>Logout</MenubarItem>
               </MenubarContent>

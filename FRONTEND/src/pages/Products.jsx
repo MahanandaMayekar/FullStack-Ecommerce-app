@@ -2,11 +2,13 @@ import RelatedProducts from '@/components/RelatedProducts';
 import { useAssets } from "@/hooks/assets/useAssets";
 import useCart from '@/hooks/context/useCart';
 import { useShopContext } from '@/hooks/context/useShopContext';
+import useFetchAllProducts from '@/hooks/products/useFetchAllProducts';
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const Products = () => {
-  const { products, assets } = useAssets();
+  const { assets } = useAssets();
+  const { productList } = useFetchAllProducts();
   const { productId } = useParams();
   const [currentProduct, setCurrentProduct] = useState(false);
   const [currentImage, setCurrentImage] = useState("");
@@ -21,12 +23,12 @@ const Products = () => {
   } = useCart();
 
   const fetchProductDetails = async () => {
-    products?.map((item) => {
+    productList?.map((item) => {
       if (item._id === productId) {
         console.log(item);
 
-        setCurrentProduct(item)
-        
+        setCurrentProduct(item);
+
         setCurrentImage(item.image[0]);
         null;
       }
@@ -34,7 +36,7 @@ const Products = () => {
   };
   useEffect(() => {
     fetchProductDetails();
-  }, [products, productId]);
+  }, [productList, productId]);
   return currentProduct ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
       {/**product data */}

@@ -1,15 +1,17 @@
-import { useAssets } from '@/hooks/assets/useAssets'
-import React, { useEffect, useState } from 'react'
-import Title from './Title';
-import LatestProductItem from './LatestProductItem';
+import React, { useEffect, useState } from "react";
+import Title from "./Title";
+import LatestProductItem from "./LatestProductItem";
+import useFetchAllProducts from "@/hooks/products/useFetchAllProducts";
 
 const BestSeller = () => {
-    const { products } = useAssets()
-    const [bestSeller, setBestSeller] = useState([])
-    useEffect(() => {
-        const bestproducts = products.filter((item) => (item.bestseller))
-        setBestSeller(bestproducts.slice(0,5))
-    },[])
+  const { productList } = useFetchAllProducts();
+  const [bestSeller, setBestSeller] = useState([]);
+  useEffect(() => {
+    if (!productList) return;
+
+    const bestproducts = productList.filter((item) => item.bestSeller);
+    setBestSeller(bestproducts.slice(0, 5));
+  }, [productList]);
   return (
     <div className="m-5 my-10">
       <div className="py-8">
@@ -32,6 +34,6 @@ const BestSeller = () => {
       </div>
     </div>
   );
-}
+};
 
-export default BestSeller
+export default BestSeller;
