@@ -1,5 +1,5 @@
-import { useAssets } from '../hooks/assets/useAssets'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { useAssets } from "../hooks/assets/useAssets";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import {
@@ -8,30 +8,38 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarSeparator,
-
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { BsCart4 } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useShopContext } from '@/hooks/context/useShopContext';
-import useCart from '@/hooks/context/useCart';
-
-
+import { useShopContext } from "@/hooks/context/useShopContext";
+import useCart from "@/hooks/context/useCart";
+import useAuth from "@/hooks/auth/useAuth";
+import { toast } from "react-toastify";
 
 export const Navbar = () => {
-  const { assets } = useAssets()
-  const navigate = useNavigate()
-  const location = useLocation()
+  const { logOut, auth } = useAuth();
+  const { assets } = useAssets();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { getTotalProductsInCart } = useCart();
   const { setShowsearchBar, showsearchBar } = useShopContext();
   function handleOnclick() {
-    navigate("/")
+    navigate("/");
   }
   function handleDiaplySearchBar() {
     setShowsearchBar(!showsearchBar);
     if (!location.pathname.includes("/collection")) {
-      navigate("/collection")
+      navigate("/collection");
     }
+  }
+
+  function handleLogout() {
+    logOut();
+    if (!auth.token) {
+      navigate("/login");
+    }
+    toast.success("Successfully logged out!!");
   }
   return (
     <div className="flex item center justify-between font-medium py-5 ">
@@ -70,7 +78,7 @@ export const Navbar = () => {
                   My Orders
                 </MenubarItem>
                 <MenubarSeparator />
-                <MenubarItem>Logout</MenubarItem>
+                <MenubarItem onClick={handleLogout}>Logout</MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
@@ -117,4 +125,4 @@ export const Navbar = () => {
       </div>
     </div>
   );
-}
+};

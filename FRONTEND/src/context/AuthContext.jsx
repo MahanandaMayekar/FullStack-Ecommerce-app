@@ -24,8 +24,18 @@ export const AuthContextProvider = ({ children }) => {
       });
     }
   }, []);
+
+  async function logOut() {
+    localStorage.removeItem("user")
+    localStorage.removeItem("token")
+    setAuth({
+      user: null,
+      token: null,
+    });
+
+  }
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, logOut }}>
       {children}
     </AuthContext.Provider>
   );
