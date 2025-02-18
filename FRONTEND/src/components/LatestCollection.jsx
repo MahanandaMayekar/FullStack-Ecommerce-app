@@ -3,9 +3,10 @@ import Title from "./Title";
 import { useState, useEffect } from "react";
 import LatestProductItem from "./LatestProductItem";
 import useFetchAllProducts from "@/hooks/products/useFetchAllProducts";
+import { Instagram } from "react-content-loader";
 
 const LatestCollection = () => {
-  const { productList } = useFetchAllProducts();
+  const { productList, isLoading } = useFetchAllProducts();
   const [latestProducts, setLatestProducts] = useState([]);
 
   useEffect(() => {
@@ -25,15 +26,21 @@ const LatestCollection = () => {
         </p>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-8">
-        {latestProducts.map((item) => (
-          <LatestProductItem
-            key={item._id} // Add a unique key here
-            productId={item._id}
-            image={item.image}
-            name={item.name}
-            price={item.price}
-          />
-        ))}
+        {isLoading
+          ? latestProducts.map((index) => (
+              <div key={index} className="flex gap-4">
+                <Instagram className="-rotate-180 h-72 scale-x-[-1]" />
+              </div>
+            ))
+          : latestProducts.map((item) => (
+              <LatestProductItem
+                key={item._id}
+                productId={item._id}
+                image={item.image}
+                name={item.name}
+                price={item.price}
+              />
+            ))}
       </div>
     </div>
   );

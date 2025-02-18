@@ -6,7 +6,7 @@ import { useShopContext } from '@/hooks/context/useShopContext';
 import useFetchAllProducts from '@/hooks/products/useFetchAllProducts';
 
 const CollectionContainer = () => {
-     const { productList } = useFetchAllProducts();
+     const { productList,isLoading } = useFetchAllProducts();
     const [showFilter, setShowFilter] = useState(false);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [category, setCategory] = useState([]);
@@ -88,6 +88,7 @@ const CollectionContainer = () => {
         handleType={handleType}
         showFilter={showFilter}
         setShowFilter={setShowFilter}
+        isLoading={isLoading}
       />
     );
 };

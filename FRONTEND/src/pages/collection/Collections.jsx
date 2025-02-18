@@ -2,6 +2,7 @@ import LatestProductItem from "@/components/LatestProductItem";
 
 import { FaChevronDown } from "react-icons/fa";
 import Title from "../../components/Title";
+import { Instagram } from "react-content-loader";
 
 const Collections = ({
   handleOnclick,
@@ -10,6 +11,7 @@ const Collections = ({
   filteredProducts,
   setSortType,
   handleType,
+  isLoading,
 }) => {
   return (
     <div className="flex flex-col sm:flex-row gap-2 sm:gap-10 pt-10 border-t mb-9">
@@ -117,15 +119,22 @@ const Collections = ({
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-8">
-            {filteredProducts.map((item) => (
-              <LatestProductItem
-                key={item._id} // Add a unique key here
-                productId={item._id}
-                image={item.image}
-                name={item.name}
-                price={item.price}
-              />
-            ))}
+            
+            {isLoading
+              ? filteredProducts.map((index) => (
+                  <div key={index} className="flex gap-4">
+                    <Instagram className="-rotate-180  scale-x-[-1]" />
+                  </div>
+                ))
+              : filteredProducts.map((item) => (
+                  <LatestProductItem
+                    key={item._id}
+                    productId={item._id}
+                    image={item.image}
+                    name={item.name}
+                    price={item.price}
+                  />
+                ))}
           </div>
         </div>
       </div>
