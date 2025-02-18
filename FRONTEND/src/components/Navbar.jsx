@@ -18,7 +18,7 @@ import useAuth from "@/hooks/auth/useAuth";
 import { toast } from "react-toastify";
 
 export const Navbar = () => {
-  const { logOut} = useAuth();
+  const { logOut,auth} = useAuth();
   const { assets } = useAssets();
   const navigate = useNavigate();
   const location = useLocation();
@@ -70,13 +70,22 @@ export const Navbar = () => {
                 <span className="pl-3 font-semibold">Login</span>
               </MenubarTrigger>
               <MenubarContent>
-                <MenubarItem>Login </MenubarItem>
-                <MenubarItem>My Profile</MenubarItem>
-                <MenubarItem onClick={() => navigate("/orders")}>
-                  My Orders
+                <MenubarItem onClick={() => navigate("/login")}>
+                  Login{" "}
                 </MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem onClick={handleLogout}>Logout</MenubarItem>
+
+                {auth?.token ? (
+                  <>
+                    <MenubarItem onClick={() => navigate("/orders")}>
+                      My Orders
+                    </MenubarItem>
+                    <MenubarItem>My Profile</MenubarItem>
+                    <MenubarSeparator />
+                    <MenubarItem onClick={handleLogout}>Logout</MenubarItem>
+                  </>
+                ) : (
+                  <></>
+                )}
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
