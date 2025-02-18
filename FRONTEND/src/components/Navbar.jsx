@@ -18,7 +18,7 @@ import useAuth from "@/hooks/auth/useAuth";
 import { toast } from "react-toastify";
 
 export const Navbar = () => {
-  const { logOut, auth } = useAuth();
+  const { logOut} = useAuth();
   const { assets } = useAssets();
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,10 +36,8 @@ export const Navbar = () => {
 
   function handleLogout() {
     logOut();
-    if (!auth.token) {
-      navigate("/login");
-    }
-    toast.success("Successfully logged out!!");
+    navigate("/login");
+    toast.success("Successfully logged out");
   }
   return (
     <div className="flex item center justify-between font-medium py-5 ">
