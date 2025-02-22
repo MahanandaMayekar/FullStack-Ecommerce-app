@@ -7,8 +7,7 @@ import ClientError from "./../utils/errors/ClientError.js";
 
 export const AuthMiddleware = async (req, res, next) => {
   try {
-    const Token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjM1MGM1YmJjYmE5N2U4NjIwZjU5NiIsImVtYWlsIjoic3JpcmFqQGdhbWlsLmNvbSIsImlhdCI6MTc0MDIxMDQwMywiZXhwIjoxNzQwMjI0ODAzfQ.FmVDyVI8xHiS5EKQ3UMLaVFEa1CT-PHEP1rbn4iE3NU";      //req.headers["x-access-token"];
+    const Token = req.headers["x-access-token"];
     if (!Token) {
       throw new ClientError({
         message: "No auth Token is provided",
