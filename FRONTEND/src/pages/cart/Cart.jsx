@@ -6,11 +6,11 @@ import useFetchAllProducts from '@/hooks/products/useFetchAllProducts';
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
-const Cart = ({ cartData, removeItemFromCart }) => {
+const Cart = ({ cartData, updateProductQuantityInCart, isPending }) => {
   const { productList } = useFetchAllProducts();
-  const {assets } = useAssets();
+  const { assets } = useAssets();
   const { currency } = useShopContext();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="border-t-2 pt-10 ml-10">
       <div>
@@ -49,19 +49,19 @@ const Cart = ({ cartData, removeItemFromCart }) => {
               </div>
               <div>
                 <input
+                  disabled={isPending}
                   type="number"
                   className=" border-2 bottom-4 p-2 w-28 sm:w-44 md:w-54"
                   min={1}
                   defaultValue={item.quantity}
-                  onChange={(e) =>
-                    e.target.value === "0"
-                      ? "null"
-                      : removeItemFromCart(
-                          item._id,
-                          item.size,
-                          Number(e.target.value)
-                        )
-                  }
+                  onChange={(e) => {
+                    const value = e.target.value.trim();
+
+                    if (value === "") return; // Prevent updating when input is cleared
+
+                    updateProductQuantityInCart(item._id, item.size, Number(value));
+                  }}
+                  
                 />
               </div>
               <div>

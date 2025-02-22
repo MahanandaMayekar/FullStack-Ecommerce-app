@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Cart from './Cart'
 import useCart from '@/hooks/context/useCart';
+import useUpdateProductQtyInCart from '@/hooks/cart/useUpdateProductQtyInCart';
 
 
 const CartContainer = () => {
+  const { updateQtyInCartMutation, isPending } = useUpdateProductQtyInCart();
   const [cartData, setCartData] = useState([]);
   const { cartItems, setCartItems } = useCart();
 
@@ -34,17 +36,19 @@ const CartContainer = () => {
     console.log("tempdata",tempData);
     
   }, [cartItems]);
-  const removeItemFromCart = (productId, size,quantity) => {
+  const updateProductQuantityInCart = async(productId, size,quantity) => {
     const updatedCartItems = { ...cartItems }; // Clone the cartItems object
     updatedCartItems[productId][size]=quantity
 
     setCartItems(updatedCartItems); // Update the state with the modified cart items
+    await updateQtyInCartMutation({ productId, size, quantity });
   };
 
   return (
     <Cart
       cartData={cartData}
-      removeItemFromCart={removeItemFromCart}
+      updateProductQuantityInCart={updateProductQuantityInCart}
+      isPending={isPending}
     />
   );
 }
