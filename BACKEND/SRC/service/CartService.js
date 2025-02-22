@@ -53,8 +53,31 @@ export const AddProductToCartService = async ({ userId, productId, size }) => {
     }
 }
 
-export const UpdateProducInCartService = async () => {
+export const UpdateProducInCartService = async ({ userId, productId, size,quantity }) => {
   try {
+    const user = await UserRepository.findById(userId);
+    if (!user) {
+      throw new ClientError({
+        message: " productId is required",
+        explanation: "productId not found",
+        statusCode: StatusCodes.BAD_REQUEST,
+      });
+    }
+
+    const product = await productRepository.findById(productId);
+    if (!product) {
+      throw new ClientError({
+        message: " productId is required",
+        explanation: "productId not found",
+        statusCode: StatusCodes.BAD_REQUEST,
+      });
+    }
+
+    let cartData = await user.cartData;
+    cartData[productId][size] = quantity
+     const updateduser = await UserRepository.update(userId, { cartData });
+     return updateduser;
+
   } catch (error) {}
 };
 
