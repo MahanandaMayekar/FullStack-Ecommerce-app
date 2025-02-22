@@ -1,3 +1,4 @@
+import useAddProductToCart from '@/hooks/cart/useAddProductToCart';
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -6,7 +7,7 @@ const CartItemsContext = createContext();
 export const CartItemsContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
   const [ProductSize, setProductSize] = useState("");
-
+const { addProductToCartMutation } = useAddProductToCart();
   const addToCart = async (itemId, size) => {
     if (!size) {
       toast.error("Please select Product size");
@@ -24,6 +25,7 @@ export const CartItemsContextProvider = ({ children }) => {
       cartData[itemId] = { [size]: 1 };
     }
     setCartItems(cartData);
+    await addProductToCartMutation({ productId:itemId, size:size });
     toast.success("Product added to Cart")
     console.log('cart items',cartItems);
     
