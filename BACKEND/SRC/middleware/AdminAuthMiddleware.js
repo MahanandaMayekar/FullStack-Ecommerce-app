@@ -62,8 +62,8 @@ export const AdminAuthMiddleware = async (req, res, next) => {
       ) {
         return res.status(error.statusCode || StatusCodes.BAD_REQUEST).json({
           success: false,
-          message: error.message,
-          explanation: error.explanation ||" something went wrong ",
+          message: error.message.message,
+          explanation: error.message.explanation ||" something went wrong ",
         });
       }
      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
