@@ -3,7 +3,7 @@ import { AddProductToCartController, UpdateProducInCartController, GetUsersCartC
 import { AuthMiddleware } from '../middleware/AuthMiddleware.js'
 const Router = express.Router()
 
-Router.get("/get-cart-items",AuthMiddleware,GetUsersCartController)
+Router.get("/get-cart-details",AuthMiddleware,GetUsersCartController)
 Router.post("/add-to-cart",AuthMiddleware,AddProductToCartController)
 Router.post("/update-cart",AuthMiddleware,UpdateProducInCartController)
 
