@@ -1,10 +1,11 @@
-import CartTotal from '@/components/CartTotal';
-import Title from '@/components/Title'
-import { useAssets } from '@/hooks/assets/useAssets';
-import { useShopContext } from '@/hooks/context/useShopContext';
-import useFetchAllProducts from '@/hooks/products/useFetchAllProducts';
-import React, { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import CartTotal from "@/components/CartTotal";
+import Title from "@/components/Title";
+import { useAssets } from "@/hooks/assets/useAssets";
+import { useShopContext } from "@/hooks/context/useShopContext";
+import useFetchAllProducts from "@/hooks/products/useFetchAllProducts";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Cart = ({ cartData, updateProductQuantityInCart, isPending }) => {
   const { productList } = useFetchAllProducts();
@@ -59,9 +60,12 @@ const Cart = ({ cartData, updateProductQuantityInCart, isPending }) => {
 
                     if (value === "") return; // Prevent updating when input is cleared
 
-                    updateProductQuantityInCart(item._id, item.size, Number(value));
+                    updateProductQuantityInCart(
+                      item._id,
+                      item.size,
+                      Number(value)
+                    );
                   }}
-                  
                 />
               </div>
               <div>
@@ -69,7 +73,10 @@ const Cart = ({ cartData, updateProductQuantityInCart, isPending }) => {
                   src={assets.bin_icon}
                   alt=""
                   className="w-6 cursor-pointer "
-                  onClick={() => removeItemFromCart(item._id, item.size, 0)}
+                  onClick={() => {
+                    updateProductQuantityInCart(item._id, item.size, 0);
+                    toast.success("successfully deleted the product");
+                  }}
                 />
               </div>
             </div>
@@ -92,4 +99,4 @@ const Cart = ({ cartData, updateProductQuantityInCart, isPending }) => {
   );
 };
 
-export default Cart
+export default Cart;
