@@ -49,3 +49,25 @@ export const updateProductQuantityInCartRequest = async ({
     );
   }
 };
+
+export const FetchCartDetailsRequest = async ({token}) => {
+    try {
+        const response = await axiosconfig.get("/cart/get-cart-details", {
+            headers: {
+                "x-access-token":token
+            }
+        });
+        console.log(
+          "Successfully fetched cart details",
+          response.data.Response
+      );
+      return response?.data?.Response;
+        
+    } catch (error) {
+        console.log("error in fetching cart details", error.response.data);
+        throw new Error(
+          error.response?.data || "Failed to fetch cart details"
+        );
+        
+    }
+}
