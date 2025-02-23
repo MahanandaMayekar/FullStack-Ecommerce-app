@@ -3,7 +3,7 @@ import Login from "./Login";
 import useLogin from "@/hooks/auth/useLogin";
 import { useNavigate } from "react-router-dom";
 import useRegisterUser from "@/hooks/auth/useRegisterUser";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"
 
 const LoginContainer = () => {
   const {
@@ -60,7 +60,7 @@ const LoginContainer = () => {
       setTimeout(() => {
         toast.success("Account created! Please log in.");
         setCurrentState("Login");
-      }, 3000);
+      }, 1000);
     }
   }, [userRegisterSuccess]);
 
