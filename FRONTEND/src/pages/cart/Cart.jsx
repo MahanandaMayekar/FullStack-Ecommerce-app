@@ -8,10 +8,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Cart = ({ cartData, updateProductQuantityInCart, isPending }) => {
-  const { productList } = useFetchAllProducts();
+  const { productList,isLoading } = useFetchAllProducts();
   const { assets } = useAssets();
   const { currency } = useShopContext();
   const navigate = useNavigate();
+  if(isLoading)return
   return (
     <div className="border-t-2 pt-10 ml-10">
       <div>

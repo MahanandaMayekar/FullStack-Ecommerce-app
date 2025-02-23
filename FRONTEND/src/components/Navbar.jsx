@@ -105,26 +105,18 @@ export const Navbar = () => {
                 <GiHamburgerMenu className="sm:hidden" size="25" />
               </MenubarTrigger>
               <MenubarContent>
-                <MenubarItem>
-                  <NavLink to="/" className="hover:font-bold">
-                    Home
-                  </NavLink>
-                </MenubarItem>
-                <MenubarItem>
-                  <NavLink to="/collection" className="hover:font-bold">
-                    Collections
-                  </NavLink>
-                </MenubarItem>
-                <MenubarItem>
-                  <NavLink to="/about" className="hover:font-bold">
-                    About
-                  </NavLink>
-                </MenubarItem>
-                <MenubarItem>
-                  <NavLink to="/contact" className="hover:font-bold">
-                    Contact
-                  </NavLink>
-                </MenubarItem>
+                <NavLink to="/" className="hover:font-bold">
+                  <MenubarItem>Home</MenubarItem>
+                </NavLink>
+                <NavLink to="/collection" className="hover:font-bold">
+                  <MenubarItem>Collections</MenubarItem>
+                </NavLink>
+                <NavLink to="/about" className="hover:font-bold">
+                  <MenubarItem>About</MenubarItem>
+                </NavLink>
+                <NavLink to="/contact" className="hover:font-bold">
+                  <MenubarItem>Contact</MenubarItem>
+                </NavLink>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
