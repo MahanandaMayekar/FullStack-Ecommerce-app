@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 const OrderSchema = new mongoose.Schema(
   {
     userId: {
@@ -6,16 +6,10 @@ const OrderSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "userId is required"],
     },
-    products: [
-      {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
-        },
-        quantity: { type: Number, required: true },
-      },
-    ],
+    products: {
+      type: Array,
+      required: true,
+    },
     amount: {
       type: Number,
       required: [true, "amount is required"],
@@ -27,7 +21,7 @@ const OrderSchema = new mongoose.Schema(
     paymentMethod: {
       type: String,
       enum: ["Stripe", "RazorPay", "Cash on Delivery"],
-      default: "cash on delivery",
+      default: "Cash on Delivery",
     },
     payment: {
       type: Boolean,
@@ -51,4 +45,4 @@ const OrderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Order=mongoose.model("Order",OrderSchema)
+export const Order = mongoose.model("Order", OrderSchema);
