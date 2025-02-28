@@ -7,11 +7,20 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const PlaceOrder = ({ setPayMethod, payMethod }) => {
+const PlaceOrder = ({
+  setPayMethod,
+  payMethod,
+  formData,
+  onChangeHandler,
+  onSubmitHandler,
+}) => {
   const { assets } = useAssets();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   return (
-    <div className=" flex flex-col sm:flex-row gap-10 justify-around sm:justify-around pt-5 sm:pt-14 min-h-[80vh]  border-t-2">
+    <form
+      onSubmit={onSubmitHandler}
+      className=" flex flex-col sm:flex-row gap-10 justify-around sm:justify-around pt-5 sm:pt-14 min-h-[80vh]  border-t-2"
+    >
       {/**--------left side */}
 
       <div className="flex flex-col gap-3 w-full ">
@@ -21,33 +30,57 @@ const PlaceOrder = ({ setPayMethod, payMethod }) => {
         <div className="flex gap-3">
           <input
             type="text"
+            required
             placeholder="First name"
+            name="firstName"
+            value={formData.firstName}
+            onChange={onChangeHandler}
             className="rounded border border-gray-400 pl-4 p-1 w-full"
           />
           <input
             type="text"
+            required
+            name="lastName"
             placeholder="Last name"
+            value={formData.lastName}
+            onChange={onChangeHandler}
             className="rounded border border-gray-400 p-2 pl-4 w-full"
           />
         </div>
         <input
           type="email"
+          required
+          name="email"
+          value={formData.email}
+          onChange={onChangeHandler}
           placeholder="Enter your email "
           className="rounded border border-gray-400 p-2 pl-4 w-full"
         />
         <input
           type="text"
+          required
+          name="street"
+          value={formData.street}
+          onChange={onChangeHandler}
           placeholder="Street"
           className="rounded border border-gray-400 p-2 pl-4 w-full"
         />
         <div className="flex gap-3">
           <input
             type="text"
+            required
+            name="city"
+            value={formData.city}
+            onChange={onChangeHandler}
             placeholder="City"
             className="rounded border border-gray-400 pl-4 p-1 w-full"
           />
           <input
             type="text"
+            required
+            name="state"
+            value={formData.state}
+            onChange={onChangeHandler}
             placeholder="State"
             className="rounded border border-gray-400 p-2 pl-4 w-full"
           />
@@ -55,17 +88,29 @@ const PlaceOrder = ({ setPayMethod, payMethod }) => {
         <div className="flex gap-3">
           <input
             type="number"
+            required
+            name="zipcode"
+            value={formData.zipcode}
+            onChange={onChangeHandler}
             placeholder="Zipcode"
             className="rounded border border-gray-400 pl-4 p-1 w-full no-spinne"
           />
           <input
             type="text"
+            required
+            name="country"
+            value={formData.country}
+            onChange={onChangeHandler}
             placeholder="Country"
             className="rounded border border-gray-400 p-2 pl-4 w-full"
           />
         </div>
         <input
           type="number"
+          required
+          name="phone"
+          value={formData.phone}
+          onChange={onChangeHandler}
           placeholder="Contact number"
           className="rounded border border-gray-400 pl-4 p-1 w-full no-spinne"
         />
@@ -130,7 +175,8 @@ const PlaceOrder = ({ setPayMethod, payMethod }) => {
           </div>
           <div className="flex  justify-end w-full mt-2 ">
             <button
-              onClick={() => navigate("/orders")}
+              type="submit"
+              //onClick={() => navigate("/orders")}
               className="bg-black text-white p-3 rounded-sm active:bg-slate-700 "
             >
               PLACE ORDER
@@ -138,7 +184,7 @@ const PlaceOrder = ({ setPayMethod, payMethod }) => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
