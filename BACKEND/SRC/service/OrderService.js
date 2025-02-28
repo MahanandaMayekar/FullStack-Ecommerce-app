@@ -2,6 +2,7 @@ import { OrderRepository } from "../repository/OrderRepository.js";
 import CustomError from "../utils/errors/CustomError.js";
 import { StatusCodes } from "http-status-codes";
 import { UserRepository } from "./../repository/UserRepository.js";
+import { Order } from "../schema/OrderSchema.js";
 
 export const placeOrderCODService = async (orderObject) => {
   try {
@@ -69,8 +70,15 @@ export const allOrdersService = async () => {
   }
 };
 
-export const usersOrdersService = async () => {
+export const usersOrdersService = async (id) => {
   try {
+    if (!id) {
+      throw new Error("users id not found");
+    }
+    const orders = await Order.find({ userId: id }).sort({ createdAt: -1 })
+    console.log("THIS IS USERS ORDERS", orders);
+
+    return orders;
   } catch (error) {
     console.log("error in fetching all orders of user", error);
     throw new CustomError({
