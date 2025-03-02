@@ -60,6 +60,8 @@ export const placeOrderRazorPayService = async () => {
 //for admin
 export const allOrdersService = async () => {
   try {
+    const response = await Order.find().sort({ createdAt: -1 });
+    return response
   } catch (error) {
     console.log("error in fetching all orders", error);
     throw new CustomError({
