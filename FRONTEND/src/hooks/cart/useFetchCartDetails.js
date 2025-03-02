@@ -4,7 +4,8 @@ import useAuth from '../auth/useAuth';
 
 
 const useFetchCartDetails = () => {
-    const{auth}=useAuth()
+  const { auth } = useAuth()
+  
     const {
       isError,
       isSuccess,
@@ -12,7 +13,7 @@ const useFetchCartDetails = () => {
       data: cartDetails,
     } = useQuery({
       queryKey: ["fetchCartDetails"],
-      queryFn: () => FetchCartDetailsRequest({ token: auth?.token }),
+      queryFn: () => FetchCartDetailsRequest({ token: auth.token }),
       staleTime: 30000,
     });
     return {

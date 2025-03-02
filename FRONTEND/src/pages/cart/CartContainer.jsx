@@ -8,7 +8,7 @@ const CartContainer = () => {
   const { updateQtyInCartMutation, isPending } = useUpdateProductQtyInCart();
   const [cartData, setCartData] = useState([]);
   const { cartItems, setCartItems } = useCart();
-
+if(isPending)return
   useEffect(() => {
     const tempData = [];
 
@@ -33,7 +33,7 @@ const CartContainer = () => {
 
     // Update the cartData state
     setCartData(tempData);
-    console.log("tempdata",tempData);
+  
     
   }, [cartItems]);
   const updateProductQuantityInCart = async(productId, size,quantity) => {

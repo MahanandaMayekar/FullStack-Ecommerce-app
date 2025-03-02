@@ -51,7 +51,7 @@ export const updateProductQuantityInCartRequest = async ({
 };
 
 export const FetchCartDetailsRequest = async ({token}) => {
-    try {
+  try {    
         const response = await axiosconfig.get("/cart/get-cart-details", {
             headers: {
                 "x-access-token":token
