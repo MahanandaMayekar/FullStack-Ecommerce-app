@@ -1,12 +1,16 @@
 import React from "react";
 
-const ProductOrders = ({ orderedProductList, isLoading }) => {
+const ProductOrders = ({
+  orderedProductList,
+  isLoading,
+  handleStatausChange,
+}) => {
   return (
     <div className="p-4 min-h-screen text-white">
       <h1 className="text-2xl font-bold mb-4 text-center text-black">
         Admin Orders
       </h1>
-      {isLoading || orderedProductList.length === 0 ? (
+      {isLoading || orderedProductList?.length === 0 ? (
         <p className="text-center">No orders found</p>
       ) : (
         orderedProductList.map((order) => {
@@ -37,16 +41,20 @@ const ProductOrders = ({ orderedProductList, isLoading }) => {
                   </p>
                 </div>
                 <div className="w-full md:w-auto flex justify-end">
-                  <select className="p-2 bg-blue-500 text-white rounded w-full md:w-auto">
+                  <select
+                    className="p-2 bg-blue-500 text-white rounded w-full md:w-auto"
+                    onChange={(e) => handleStatausChange({e,orderId:order._id})}
+                  >
                     <option value="Order Placed">Order Placed</option>
                     <option value="Packing">Packing</option>
                     <option value="Shipped">Shipped</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Cancelled">Cancelled</option>
                     <option value="Out for delivery">Out for delivery</option>
                     <option value="Delivered">Delivered</option>
                   </select>
                 </div>
               </div>
-
               {/* Order Details */}
               <div className="mt-3 text-sm md:text-base">
                 <p>
@@ -60,14 +68,12 @@ const ProductOrders = ({ orderedProductList, isLoading }) => {
                 </p>
                 <p>
                   <strong>Address:</strong> {address.street}, {address.city},{" "}
-                  {address.state},{address.country}-
-                  {address.zipcode}
+                  {address.state},{address.country}-{address.zipcode}
                 </p>
                 <p>
-                  <strong>Contact Number :</strong> {address.phone} 
+                  <strong>Contact Number :</strong> {address.phone}
                 </p>
               </div>
-
               {/* Product List */}
               <h3 className="mt-4 text-lg font-semibold">Products:</h3>
               {order.products.map((product, index) => (
