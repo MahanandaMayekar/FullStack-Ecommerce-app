@@ -91,13 +91,41 @@ export const usersOrdersService = async (id) => {
   }
 };
 
-export const updateStatusService = async () => {
+export const updateStatusService = async (orderId, status) => {
   try {
+    if (!status) {
+      throw new CustomError({
+        message: "Status is missing",
+        explanation: "A valid status is required to update the order",
+        statusCode: StatusCodes.BAD_REQUEST,
+      });
+    }
+
+    if (!orderId) {
+      throw new CustomError({
+        message: "Order ID is missing",
+        explanation: "A valid order ID is required to update the order status",
+        statusCode: StatusCodes.BAD_REQUEST,
+      });
+    }
+
+    const order = await Order.findById(orderId);
+    if (!order) {
+      throw new CustomError({
+        message: "Order not found",
+        explanation: "No order exists with the provided ID",
+        statusCode: StatusCodes.NOT_FOUND,
+      });
+    }
+
+    const updatedOrder = await OrderRepository.update(orderId, { status });
+
+    return updatedOrder;
   } catch (error) {
-    console.log("error in updating status", error);
+    console.error("Error in updating status:", error);
     throw new CustomError({
-      message: error.message,
-      explanation: "error in updating status",
+      message: error.message || "Failed to update status",
+      explanation: "An error occurred while updating the order status",
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     });
   }
