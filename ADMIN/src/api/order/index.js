@@ -1,7 +1,4 @@
-import axiosConfig from '@/config/axiosConfig';
 import axios from 'axios';
-
-
 export const adminOrderDetailsRequest = async ({ token }) => {
     try {
           
@@ -23,3 +20,24 @@ export const adminOrderDetailsRequest = async ({ token }) => {
     );
   }
 };
+export const changeOrderStatusRequest = async ({ token,orderId,status }) => {
+  try {
+    const response = await axios.post("http://localhost:8000/api/order/status",{orderId,status}, {
+      headers: {
+        "x-access-token": token,
+      },
+    });
+    console.log(
+      "Successfully updated order status",
+      response.data.Response
+    );
+
+    return response.data.Response;
+  } catch (error) {
+    console.error("Error from API:", error.response?.data || error);
+    throw new Error(
+      error.response?.data?.message || "Error in updating order status"
+    );
+  }
+};
+
