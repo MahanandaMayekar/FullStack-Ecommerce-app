@@ -3,11 +3,13 @@ import CustomError from "../utils/errors/CustomError.js";
 import { StatusCodes } from "http-status-codes";
 import { UserRepository } from "./../repository/UserRepository.js";
 import { Order } from "../schema/OrderSchema.js";
+import { STRIPE_SECRET_KEY } from "../config/serverConfig.js";
+import Stripe from "stripe";
+const stripe = new Stripe(STRIPE_SECRET_KEY);
+const DELIVERY_FEE = 10 * 100;
 
 export const placeOrderCODService = async (orderObject) => {
   try {
-    //console.log("orderObj", orderObject);
-
     if (!orderObject.userId) {
       throw new CustomError({
         message: "User ID is missing",
@@ -33,8 +35,76 @@ export const placeOrderCODService = async (orderObject) => {
   }
 };
 
-export const placeOrderStripeService = async () => {
+export const placeOrderStripeService = async (orderData, user,origin) => {
   try {
+    if (!orderData.userId) {
+      throw new CustomError({
+        message: "User ID is missing",
+        explanation: "A valid user ID is required to place an order",
+        statusCode: StatusCodes.BAD_REQUEST,
+      });
+    }
+
+    const order = await OrderRepository.create(orderData);
+
+    try {
+      let lineItems = orderData.products.map((product) => ({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: product.name,
+            images: [product.image?.[0]],
+          },
+          unit_amount: product.price * 100, // Convert price to cents
+        },
+        quantity: product.quantity,
+      }));
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Delivery Charge",
+          },
+          unit_amount: DELIVERY_FEE, // Fixed delivery fee
+        },
+        quantity: 1,
+      });
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"], // Accepts credit/debit cards
+        mode: "payment", // One-time payment
+        line_items: lineItems,
+        success_url: `${origin}/verify?success=true&orderId=${order._id.toString()}`,
+        cancel_url: `${origin}/verify?success=false&orderId=${order._id.toString()}`,
+        customer_email: user?.email, // Prefill user's email
+      });
+
+      return {
+        _id: order._id.toString(),
+        userId: order.userId.toString(),
+        products: order.products.map((product) => ({
+          _id: product._id.toString(),
+          name: product.name,
+          price: product.price,
+          size: product.size,
+          quantity: product.quantity,
+        })),
+        amount: order.amount,
+        address: JSON.parse(order.address), // Convert stringified address to JSON
+        paymentMethod: order.paymentMethod,
+        payment: order.payment,
+        status: order.status,
+        createdAt: order.createdAt,
+        updatedAt: order.updatedAt,
+        checkoutUrl: session.url, // Stripe Checkout URL
+      };
+    } catch (error) {
+      console.error("Error in Stripe payment session:", error);
+      throw new CustomError({
+        message: "Stripe session creation failed",
+        explanation: error.message,
+        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      });
+    }
   } catch (error) {
     console.log("error in placing order by Stripe method", error);
     throw new CustomError({
@@ -44,6 +114,32 @@ export const placeOrderStripeService = async () => {
     });
   }
 };
+
+export const verifyStripeService = async ({ orderId, userId, success }) => {
+  try {
+    if (success === "true") {
+      const order=await OrderRepository.update(orderId, { payment: true });
+      await await UserRepository.update(userId, {
+        cartData: {},
+      });
+          
+      return order
+    }
+
+    if (success === "false") {
+      const order = await OrderRepository.deleteById(orderId)
+      return order
+    }
+  } catch (error) {
+    console.log("error in stripe verification", error);
+    throw new CustomError({
+      message: "error in stripe verification",
+      explanation: "error in placing order by Stripe method",
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    });
+  }
+  }
+
 
 export const placeOrderRazorPayService = async () => {
   try {
@@ -61,7 +157,7 @@ export const placeOrderRazorPayService = async () => {
 export const allOrdersService = async () => {
   try {
     const response = await Order.find().sort({ createdAt: -1 });
-    return response
+    return response;
   } catch (error) {
     console.log("error in fetching all orders", error);
     throw new CustomError({
@@ -77,8 +173,8 @@ export const usersOrdersService = async (id) => {
     if (!id) {
       throw new Error("users id not found");
     }
-    const orders = await Order.find({ userId: id }).sort({ createdAt: -1 })
-    console.log("THIS IS USERS ORDERS", orders);
+    const orders = await Order.find({ userId: id }).sort({ createdAt: -1 });
+    //console.log("THIS IS USERS ORDERS", orders);
 
     return orders;
   } catch (error) {

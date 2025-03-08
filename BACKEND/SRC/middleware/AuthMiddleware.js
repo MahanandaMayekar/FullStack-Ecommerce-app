@@ -39,22 +39,11 @@ export const AuthMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     console.log("error in auth admin middleware", error.message);
-    if (
-      error instanceof ClientError ||
-      error.name === "JsonWebTokenError" ||
-      error.name === "TokenExpiredError"
-    ) {
-      return res.status(error.statusCode || StatusCodes.BAD_REQUEST).json({
-        success: false,
-        message: error.message.message,
-        explanation: error.message.explanation || " something went wrong ",
-      });
-    }
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    return res.status(StatusCodes.UNAUTHORIZED).json({
       success: false,
-      error: error.message,
-      data: {},
-      message: "Internal server error",
+      message: "Authentication error",
+      explanation:
+        error.name === "TokenExpiredError" ? "JWT expired" : "Invalid token",
     });
   }
 };

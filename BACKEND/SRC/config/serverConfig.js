@@ -8,4 +8,5 @@ export const CLOUDINARY_API_KEY=process.env.CLOUDINARY_API_KEY
 export const CLOUDINARY_SECRET_KEY=process.env.CLOUDINARY_SECRET_KEY
 export const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME
 export const JWT_SECRET = process.env.JWT_SECRET
-export const JWT_EXPIRY=process.env.JWT_EXPIRY
+export const JWT_EXPIRY = process.env.JWT_EXPIRY
+export const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
