@@ -5,6 +5,7 @@ import { UserRepository } from "./../repository/UserRepository.js";
 import { Order } from "../schema/OrderSchema.js";
 import { STRIPE_SECRET_KEY } from "../config/serverConfig.js";
 import Stripe from "stripe";
+import instance from '../config/razorPayConfig.js';
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 const DELIVERY_FEE = 10 * 100;
 
@@ -141,8 +142,51 @@ export const verifyStripeService = async ({ orderId, userId, success }) => {
   }
 
 
-export const placeOrderRazorPayService = async () => {
+export const placeOrderRazorPayService = async (orderObject) => {
   try {
+    if (!orderObject.userId) {
+      throw new CustomError({
+        message: "User ID is missing",
+        explanation: "A valid user ID is required to place an order",
+        statusCode: StatusCodes.BAD_REQUEST,
+      });
+    }
+
+    const order = await OrderRepository.create(orderObject);
+       if (!order) {
+         throw new CustomError({
+           message: "Failed to create order",
+           explanation: "Database error while creating order",
+           statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+         });
+    }
+      const amount = orderObject.amount;
+      if (!amount || amount <= 0) {
+        throw new CustomError({
+          message: "Invalid order amount",
+          explanation: "Amount must be greater than zero",
+          statusCode: StatusCodes.BAD_REQUEST,
+        });
+      }
+    const options = {
+      amount: amount * 100, // Razorpay expects the amount in paise (1 INR = 100 paise)
+      currency:"USD",
+      receipt: order._id.toString(),
+    };
+    const razorpayOrder = await instance.orders.create(options)
+    if (!razorpayOrder) {
+      throw new CustomError({
+        message: "failed to create razorpay order",
+        explanation: "failed to create razorpay order",
+        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      });
+      
+    }
+     //console.log("Razorpay Order Created:", razorpayOrder);
+
+     return {
+       razorpayOrder
+     };
   } catch (error) {
     console.log("error in placing order by RazorPay method", error);
     throw new CustomError({
