@@ -8,9 +8,11 @@ import useCodMethod from "@/hooks/order/useCodMethod";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import useStripeMethod from "@/hooks/order/useStripeMethod";
-
+import useRazorpayMethod from "@/hooks/order/useRazorpayMethod";
 const PlaceOrderContainer = () => {
   const navigate = useNavigate();
+  const { orderByRazorpayMutation, isPending: isRazorpayMethodPending } =
+    useRazorpayMethod();
   const { orderByStripeMutation, isPending: isStripeMethodPending } =
     useStripeMethod();
   const { setCartItems } = useCart();
@@ -47,7 +49,13 @@ const PlaceOrderContainer = () => {
     }
 
     try {
-      if (isLoading || isPending || isStripeMethodPending) return;
+      if (
+        isLoading ||
+        isPending ||
+        isStripeMethodPending ||
+        isRazorpayMethodPending
+      )
+        return;
       //if payment methode is "COD" this piece of code executes
 
       let orderedItems = [];
@@ -87,7 +95,10 @@ const PlaceOrderContainer = () => {
 
       if (payMethod === "stripe") {
         await orderByStripeMutation({ orderData });
-                   }
+      }
+      if (payMethod === "razor") {
+        await orderByRazorpayMutation({ orderData });
+      }
     } catch (error) {
       console.error("Error in submitting delivery information:", error);
       toast.error(
