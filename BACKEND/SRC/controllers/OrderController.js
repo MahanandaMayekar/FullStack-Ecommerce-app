@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import {
   allOrdersService,
   placeOrderCODService,
+  placeOrderRazorPayService,
   placeOrderStripeService,
   updateStatusService,
   usersOrdersService,
@@ -196,3 +197,39 @@ export const verifyStripeController = async (req, res) => {
       });
   }
 };
+
+
+export const placeOrderByRazorparController = async (req,res) => {
+  try {
+  
+      const orderObject = {
+        userId: req.user?._id.toString(),
+        products: req.body.orderData?.products,
+        amount: req.body?.orderData?.amount,
+        address: req.body?.orderData?.address,
+        paymentMethod: "RazorPay",
+        payment: false,
+    };
+    const response = await placeOrderRazorPayService(orderObject);
+    return res
+      .status(StatusCodes.CREATED)
+      .json(
+        SuccessResponse(
+          "Stripe checkout session created successfully",
+          response
+        )
+      );
+    
+  } catch (error) {
+    console.error("Error in Stripe verification controller:", error);
+
+    return res
+      .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({
+        success: false,
+        message: error.message || "Internal server error",
+        explanation: error.explanation || "Error in placing order by razor pay",
+      });
+    
+  }
+}
