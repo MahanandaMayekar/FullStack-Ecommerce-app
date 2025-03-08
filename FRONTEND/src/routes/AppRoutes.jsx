@@ -11,6 +11,7 @@ import CollectionContainer from '@/pages/collection/CollectionContainer';
 import CartContainer from '@/pages/cart/CartContainer';
 import PlaceOrderContainer from './../pages/place-order/PlaceOrderContainer';
 import LoginContainer from '@/pages/Login/LoginContainer';
+import Verify from '@/pages/Verify';
 
 const AppRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const AppRoutes = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<LoginContainer />} />
           <Route path="/place-order" element={<PlaceOrderContainer />} />
+          <Route path="/verify" element={<Verify />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
