@@ -2,23 +2,22 @@ import useAddProductToCart from '@/hooks/cart/useAddProductToCart';
 import useFetchCartDetails from '@/hooks/cart/useFetchCartDetails';
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
 const CartItemsContext = createContext();
-
 export const CartItemsContextProvider = ({ children }) => {
   const { cartDetails, isFetching } = useFetchCartDetails();
   const [cartItems, setCartItems] = useState({});
   const [ProductSize, setProductSize] = useState("");
   const { addProductToCartMutation } = useAddProductToCart();
-  useEffect(() => {
-   if(isFetching)return
-   if ( cartDetails) {
-     setCartItems((prev) => ({
-       ...prev,
-       ...cartDetails, // Ensure cartDetails structure matches state format
-     }));
-   }
- }, [cartDetails, isFetching]);
+useEffect(() => {
+    
+    if (isFetching) return;
+    if (cartDetails) {
+      setCartItems((prev) => ({
+        ...prev,
+        ...cartDetails, // Ensure cartDetails structure matches state format
+      }));
+    }
+  }, [cartDetails, isFetching]);
   const addToCart = async (itemId, size) => {
     if (!size) {
       toast.error("Please select Product size");

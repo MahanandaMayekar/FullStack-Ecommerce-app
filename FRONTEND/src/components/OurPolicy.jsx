@@ -5,7 +5,7 @@ import { useAssets } from '@/hooks/assets/useAssets'
 
 const OurPolicy = () => {
     const { assets } = useAssets();
-    console.log("asdfghj", assets);
+    
     
   return (
     <div className="flex flex-col  sm:flex-row justify-around gap-5 p-7 my-20">

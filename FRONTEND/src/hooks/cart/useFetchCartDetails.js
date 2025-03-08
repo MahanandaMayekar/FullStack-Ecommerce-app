@@ -8,6 +8,7 @@ const useFetchCartDetails = () => {
   
     const {
       isError,
+      error,
       isSuccess,
       isFetching,
       data: cartDetails,
@@ -21,6 +22,7 @@ const useFetchCartDetails = () => {
       isSuccess,
       isFetching,
       cartDetails,
+      error,
     };
 }
 

@@ -65,9 +65,8 @@ export const FetchCartDetailsRequest = async ({token}) => {
         
     } catch (error) {
         console.log("error in fetching cart details", error.response.data);
-        throw new Error(
-          error.response?.data || "Failed to fetch cart details"
-        );
+    throw error.response.data;
+  
         
     }
 }
