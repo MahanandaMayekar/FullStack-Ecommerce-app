@@ -16,6 +16,26 @@ export const placeOrderByCodRequest = async ({ token, orderData }) => {
     throw new Error(error.response?.data?.message || "Error placing order");
   }
 };
+export const placeOrderByRazorpayRequest = async ({ token, orderData }) => {
+  try {
+    const response = await axiosconfig.post("/order/razorPay", orderData, {
+      headers: {
+        "x-access-token": token,
+      },
+    });
+    console.log(
+      "Successfully placed order by razorPay",
+      response.data.Response
+    );
+    return response?.data?.Response;
+  } catch (error) {
+    console.error("Error from API:", error.response?.data || error);
+    throw new Error(
+      error.response?.data?.message || "Error placing order by razorPay"
+    );
+  }
+};
+
 
 export const placeOrderByStripeRequest = async ({ token, orderData }) => {
   try {
@@ -33,6 +53,7 @@ export const placeOrderByStripeRequest = async ({ token, orderData }) => {
     );
   }
 };
+
 
 export const StripeVerificationRequest = async ({ orderId, success,token }) => {
   try {
