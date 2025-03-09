@@ -3,15 +3,41 @@ import { useShopContext } from "@/hooks/context/useShopContext";
 import useFetchUsersOrderDetails from "@/hooks/order/useFetchUsersOrderDetails";
 import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 const Orders = () => {
+  const navigate=useNavigate()
   const { currency } = useShopContext();
   const { orderedProductList, isLoading } = useFetchUsersOrderDetails();
   const query = useQueryClient();
-
-  if (isLoading)
-    return <p className="text-center py-10 text-gray-700">Loading orders...</p>;
-
+if (isLoading) {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700">
+      <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-blue-500"></div>
+      <p className="mt-3 text-lg font-medium">Fetching your orders...</p>
+    </div>
+  );
+}
+if (orderedProductList.length === 0) {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800 p-4">
+      <div className="bg-white shadow-lg rounded-xl p-6 text-center w-80 transform transition duration-300 hover:scale-105">
+        <p className="text-2xl">🛒</p>
+        <p className="text-lg font-semibold mt-2">Your cart is empty!</p>
+        <p className="text-gray-500 mt-1">
+          Start adding products to place an order.
+        </p>
+        <button
+          className="mt-4 px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all duration-300 hover:shadow-md"
+          onClick={() => navigate("/collection")}
+        >
+          🛍️ Browse Products
+        </button>
+      </div>
+    </div>
+  );
+}
   function handleTrackOrder() {
     query.invalidateQueries("fetchUsersOrderDetails");
   }
