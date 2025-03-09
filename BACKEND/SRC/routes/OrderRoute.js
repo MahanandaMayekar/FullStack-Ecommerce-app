@@ -1,7 +1,8 @@
 import express from "express"
 import { AdminAuthMiddleware } from '../middleware/AdminAuthMiddleware.js'
 import { AuthMiddleware } from './../middleware/AuthMiddleware.js';
-import { adminOrderListController, placeOrderByRazorparController, placeOrderCODController, placeOrderStripeController, updateStatusController, usersOrderDetailsController, verifyStripeController } from '../controllers/OrderController.js';
+import { adminOrderListController, placeOrderByRazorparController, placeOrderCODController, placeOrderStripeController, updateStatusController, usersOrderDetailsController, verifyRazorpayController, verifyStripeController } from '../controllers/OrderController.js';
+
 placeOrderByRazorparController
 const Router = express.Router()
 //admin
@@ -16,6 +17,7 @@ Router.post("/razorPay", AuthMiddleware, placeOrderByRazorparController);
 Router.get("/users-orders", AuthMiddleware, usersOrderDetailsController);
 //verify payment
 Router.post("/verify", AuthMiddleware, verifyStripeController);
+Router.post("/verifyRazorpay", AuthMiddleware, verifyRazorpayController);
 
 
 

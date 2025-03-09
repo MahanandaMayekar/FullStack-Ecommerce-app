@@ -197,6 +197,31 @@ export const placeOrderRazorPayService = async (orderObject) => {
   }
 };
 
+export const verifyRazorpayService = async (userId,razorpay_order_id) => {
+  try {
+    const orderInfo = await instance.orders.fetch(razorpay_order_id);
+    console.log("ORDERINFO===>",orderInfo.status);
+    
+        
+    if (orderInfo.status === "paid") {
+      const updatedOrder=await OrderRepository.update(orderInfo.receipt, { payment: true })
+      await UserRepository.update(userId, { cartData: {} })
+      return updatedOrder;
+    } else {
+      const deletedorder = await OrderRepository.deleteById(orderInfo.receipt)
+      return deletedorder
+    }
+    
+  } catch (error) {
+    console.log("error in fetching all orders", error);
+    throw new CustomError({
+      message: error.message,
+      explanation: "error in fetching all orders",
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    });
+    
+  }
+}
 //for admin
 export const allOrdersService = async () => {
   try {

@@ -72,6 +72,33 @@ export const StripeVerificationRequest = async ({ orderId, success,token }) => {
     );
   }
 };
+export const RazorpayVerificationRequest = async ({
+  token,
+  razorpay_order_id,
+}) => {
+  try {
+    const response = await axiosconfig.post(
+      "/order/verifyRazorpay",
+      { razorpay_order_id }, 
+      {
+        headers: {
+          "x-access-token": token,
+            "Content-Type": "application/json"
+        },
+      }
+    );
+    console.log("Successfully verified Razorpay payment", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in Razorpay verification:",
+      error.response?.data || error
+    );
+    throw new Error(
+      error.response?.data?.message || "Error in Razorpay verification"
+    );
+  }
+};
 
 export const usersOrderDetailsRequest = async ({ token }) => {
   try {

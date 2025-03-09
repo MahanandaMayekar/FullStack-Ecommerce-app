@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import useAuth from "../auth/useAuth";
 import { placeOrderByRazorpayRequest } from "@/api/orders";
-
+import useRazorpayVerification from './useRazorpayVerification';
 
 const useRazorpayMethod = () => {
+    const { verifyRazorpayMutation } = useRazorpayVerification();
     const { auth } = useAuth();
    const initPay = (razorpayOrder) => {
      const options = {
@@ -15,7 +16,8 @@ const useRazorpayMethod = () => {
          order_id: razorpayOrder.id,
        receipt:razorpayOrder.receipt,
        handler: async (paymentResponse) => {
-         console.log("Payment Success:", paymentResponse);
+           console.log("Payment Success:", paymentResponse.razorpay_order_id);
+           await verifyRazorpayMutation({razorpay_order_id:paymentResponse.razorpay_order_id});
         
        },
        prefill: {

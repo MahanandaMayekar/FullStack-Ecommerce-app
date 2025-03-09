@@ -7,6 +7,7 @@ import {
   updateStatusService,
   usersOrdersService,
   verifyStripeService,
+  verifyRazorpayService,
 } from "../service/OrderService.js";
 import { SuccessResponse } from "../utils/common/SuccessResponse.js";
 import ClientError from "../utils/errors/ClientError.js";
@@ -233,3 +234,31 @@ export const placeOrderByRazorparController = async (req,res) => {
     
   }
 }
+
+export const verifyRazorpayController = async (req,res) => {
+  try {
+    const userId = req.user?._id; // Get user ID from auth middleware
+ 
+    
+    const razorpay_payment_id = req.body.razorpay_order_id
+    console.log("req.body", razorpay_payment_id);
+    
+    const response = await verifyRazorpayService(userId, razorpay_payment_id)
+     return res
+       .status(StatusCodes.OK)
+       .json(SuccessResponse("Payment verified successfully", response));
+    
+  } catch (error) {
+    console.error("Error in Razorpay verification controller:", error);
+
+    return res
+      .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({
+        success: false,
+        message: error.message || "Internal server error",
+        explanation: error.explanation || "Error in verifying Razorpay payment",
+      });
+    
+  }
+    
+  }
