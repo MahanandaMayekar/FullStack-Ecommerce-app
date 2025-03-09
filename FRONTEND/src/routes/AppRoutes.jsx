@@ -12,7 +12,7 @@ import CartContainer from '@/pages/cart/CartContainer';
 import PlaceOrderContainer from './../pages/place-order/PlaceOrderContainer';
 import LoginContainer from '@/pages/Login/LoginContainer';
 import Verify from '@/pages/Verify';
-
+import Profile from '@/pages/Profile';
 const AppRoutes = () => {
   return (
     <div>
@@ -28,6 +28,7 @@ const AppRoutes = () => {
           <Route path="/login" element={<LoginContainer />} />
           <Route path="/place-order" element={<PlaceOrderContainer />} />
           <Route path="/verify" element={<Verify />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

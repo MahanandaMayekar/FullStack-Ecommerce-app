@@ -1,10 +1,9 @@
 import { addProductTocartRequest } from "@/api/cart";
 import { useMutation } from "@tanstack/react-query";
-import useAuth from "../auth/useAuth.js";
-
 
 const useAddProductToCart = () => {
-  const { auth } = useAuth();
+  const token = localStorage.getItem("token")
+  
   const {
     isPending,
     isSuccess,
@@ -12,7 +11,7 @@ const useAddProductToCart = () => {
     mutateAsync: addProductToCartMutation,
   } = useMutation({
     mutationFn: ({ productId, size }) =>
-      addProductTocartRequest({ productId, size, token: auth?.token }),
+      addProductTocartRequest({ productId, size, token: token }),
     onSuccess: (data) => {
       console.log("Successfully added product to cart", data);
     },
