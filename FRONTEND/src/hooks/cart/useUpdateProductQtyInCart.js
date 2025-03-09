@@ -1,6 +1,6 @@
 import { updateProductQuantityInCartRequest } from "@/api/cart";
-import useAuth from "../auth/useAuth";
 import { useMutation } from "@tanstack/react-query";
+import useAuth from "../auth/useAuth";
 
 const useUpdateProductQtyInCart = () => {
   const { auth } = useAuth();

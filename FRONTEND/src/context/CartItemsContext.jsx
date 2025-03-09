@@ -1,5 +1,5 @@
-import useAddProductToCart from '@/hooks/cart/useAddProductToCart';
-import useFetchCartDetails from '@/hooks/cart/useFetchCartDetails';
+import useAddProductToCart from "@/hooks/cart/useAddProductToCart";
+import useFetchCartDetails from "@/hooks/cart/useFetchCartDetails";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 const CartItemsContext = createContext();
@@ -8,8 +8,7 @@ export const CartItemsContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
   const [ProductSize, setProductSize] = useState("");
   const { addProductToCartMutation } = useAddProductToCart();
-useEffect(() => {
-    
+  useEffect(() => {
     if (isFetching) return;
     if (cartDetails) {
       setCartItems((prev) => ({
@@ -35,10 +34,9 @@ useEffect(() => {
       cartData[itemId] = { [size]: 1 };
     }
     setCartItems(cartData);
-    await addProductToCartMutation({ productId:itemId, size:size });
-    toast.success("Product added to Cart")
-    console.log('cart items',cartItems);
-    
+    await addProductToCartMutation({ productId: itemId, size: size });
+    toast.success("Product added to Cart");
+    console.log("cart items", cartItems);
   };
 
   const getTotalProductsInCart = () => {
@@ -64,7 +62,14 @@ useEffect(() => {
 
   return (
     <CartItemsContext.Provider
-      value={{ cartItems, setCartItems, addToCart, getTotalProductsInCart,ProductSize, setProductSize }}
+      value={{
+        cartItems,
+        setCartItems,
+        addToCart,
+        getTotalProductsInCart,
+        ProductSize,
+        setProductSize,
+      }}
     >
       {children}
     </CartItemsContext.Provider>

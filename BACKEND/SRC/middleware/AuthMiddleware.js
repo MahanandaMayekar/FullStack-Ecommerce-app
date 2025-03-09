@@ -4,7 +4,6 @@ import { JWT_SECRET } from "../config/serverConfig.js";
 import { UserRepository } from "../repository/UserRepository.js";
 import ClientError from "./../utils/errors/ClientError.js";
 
-
 export const AuthMiddleware = async (req, res, next) => {
   try {
     const Token = req.headers["x-access-token"];
@@ -35,7 +34,7 @@ export const AuthMiddleware = async (req, res, next) => {
       });
     }
 
-       req.user = user;
+    req.user = user;
     next();
   } catch (error) {
     console.log("error in auth admin middleware", error.message);

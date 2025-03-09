@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import useAuth from "../auth/useAuth";
 
 const useStripeMethod = () => {
-     const { auth } = useAuth();
+  const { auth } = useAuth();
 
   const {
     isPending,
@@ -17,11 +17,11 @@ const useStripeMethod = () => {
       console.log("Successfully placed order by stripe", data);
       if (data?.checkoutUrl) {
         window.location.replace(data.checkoutUrl); // Redirect to Stripe checkout
-      } 
+      }
     },
     onError: (err) => {
       console.log("failed to placed order by stripe", err);
-         },
+    },
   });
   return {
     isPending,
@@ -29,8 +29,6 @@ const useStripeMethod = () => {
     error,
     orderByStripeMutation,
   };
-  
-}
+};
 
-export default useStripeMethod
-
+export default useStripeMethod;

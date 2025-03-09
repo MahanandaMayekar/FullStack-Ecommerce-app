@@ -1,5 +1,3 @@
-import React from "react";
-
 const ProductOrders = ({
   orderedProductList,
   isLoading,
@@ -43,7 +41,9 @@ const ProductOrders = ({
                 <div className="w-full md:w-auto flex justify-end">
                   <select
                     className="p-2 bg-blue-500 text-white rounded w-full md:w-auto"
-                    onChange={(e) => handleStatausChange({e,orderId:order._id})}
+                    onChange={(e) =>
+                      handleStatausChange({ e, orderId: order._id })
+                    }
                   >
                     <option value="Order Placed">Order Placed</option>
                     <option value="Packing">Packing</option>

@@ -18,6 +18,6 @@ const useRegisterUser = () => {
       toast.error("failed to register a  new user" || error.message);
     },
   });
-  return {  registerUserMutation, isPending, isSuccess, error };
+  return { registerUserMutation, isPending, isSuccess, error };
 };
 export default useRegisterUser;

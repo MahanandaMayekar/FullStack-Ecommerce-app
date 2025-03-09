@@ -1,11 +1,11 @@
-import { OrderRepository } from "../repository/OrderRepository.js";
-import CustomError from "../utils/errors/CustomError.js";
 import { StatusCodes } from "http-status-codes";
-import { UserRepository } from "./../repository/UserRepository.js";
-import { Order } from "../schema/OrderSchema.js";
-import { STRIPE_SECRET_KEY } from "../config/serverConfig.js";
 import Stripe from "stripe";
-import instance from '../config/razorPayConfig.js';
+import instance from "../config/razorPayConfig.js";
+import { STRIPE_SECRET_KEY } from "../config/serverConfig.js";
+import { OrderRepository } from "../repository/OrderRepository.js";
+import { Order } from "../schema/OrderSchema.js";
+import CustomError from "../utils/errors/CustomError.js";
+import { UserRepository } from "./../repository/UserRepository.js";
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 const DELIVERY_FEE = 10 * 100;
 
@@ -36,7 +36,7 @@ export const placeOrderCODService = async (orderObject) => {
   }
 };
 
-export const placeOrderStripeService = async (orderData, user,origin) => {
+export const placeOrderStripeService = async (orderData, user, origin) => {
   try {
     if (!orderData.userId) {
       throw new CustomError({
@@ -119,17 +119,17 @@ export const placeOrderStripeService = async (orderData, user,origin) => {
 export const verifyStripeService = async ({ orderId, userId, success }) => {
   try {
     if (success === "true") {
-      const order=await OrderRepository.update(orderId, { payment: true });
+      const order = await OrderRepository.update(orderId, { payment: true });
       await await UserRepository.update(userId, {
         cartData: {},
       });
-          
-      return order
+
+      return order;
     }
 
     if (success === "false") {
-      const order = await OrderRepository.deleteById(orderId)
-      return order
+      const order = await OrderRepository.deleteById(orderId);
+      return order;
     }
   } catch (error) {
     console.log("error in stripe verification", error);
@@ -139,8 +139,7 @@ export const verifyStripeService = async ({ orderId, userId, success }) => {
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     });
   }
-  }
-
+};
 
 export const placeOrderRazorPayService = async (orderObject) => {
   try {
@@ -153,40 +152,39 @@ export const placeOrderRazorPayService = async (orderObject) => {
     }
 
     const order = await OrderRepository.create(orderObject);
-       if (!order) {
-         throw new CustomError({
-           message: "Failed to create order",
-           explanation: "Database error while creating order",
-           statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-         });
+    if (!order) {
+      throw new CustomError({
+        message: "Failed to create order",
+        explanation: "Database error while creating order",
+        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      });
     }
-      const amount = orderObject.amount;
-      if (!amount || amount <= 0) {
-        throw new CustomError({
-          message: "Invalid order amount",
-          explanation: "Amount must be greater than zero",
-          statusCode: StatusCodes.BAD_REQUEST,
-        });
-      }
+    const amount = orderObject.amount;
+    if (!amount || amount <= 0) {
+      throw new CustomError({
+        message: "Invalid order amount",
+        explanation: "Amount must be greater than zero",
+        statusCode: StatusCodes.BAD_REQUEST,
+      });
+    }
     const options = {
       amount: amount * 100, // Razorpay expects the amount in paise (1 INR = 100 paise)
-      currency:"USD",
+      currency: "USD",
       receipt: order._id.toString(),
     };
-    const razorpayOrder = await instance.orders.create(options)
+    const razorpayOrder = await instance.orders.create(options);
     if (!razorpayOrder) {
       throw new CustomError({
         message: "failed to create razorpay order",
         explanation: "failed to create razorpay order",
         statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       });
-      
     }
-     //console.log("Razorpay Order Created:", razorpayOrder);
+    //console.log("Razorpay Order Created:", razorpayOrder);
 
-     return {
-       razorpayOrder
-     };
+    return {
+      razorpayOrder,
+    };
   } catch (error) {
     console.log("error in placing order by RazorPay method", error);
     throw new CustomError({
@@ -197,21 +195,21 @@ export const placeOrderRazorPayService = async (orderObject) => {
   }
 };
 
-export const verifyRazorpayService = async (userId,razorpay_order_id) => {
+export const verifyRazorpayService = async (userId, razorpay_order_id) => {
   try {
     const orderInfo = await instance.orders.fetch(razorpay_order_id);
-    console.log("ORDERINFO===>",orderInfo.status);
-    
-        
+    console.log("ORDERINFO===>", orderInfo.status);
+
     if (orderInfo.status === "paid") {
-      const updatedOrder=await OrderRepository.update(orderInfo.receipt, { payment: true })
-      await UserRepository.update(userId, { cartData: {} })
+      const updatedOrder = await OrderRepository.update(orderInfo.receipt, {
+        payment: true,
+      });
+      await UserRepository.update(userId, { cartData: {} });
       return updatedOrder;
     } else {
-      const deletedorder = await OrderRepository.deleteById(orderInfo.receipt)
-      return deletedorder
+      const deletedorder = await OrderRepository.deleteById(orderInfo.receipt);
+      return deletedorder;
     }
-    
   } catch (error) {
     console.log("error in fetching all orders", error);
     throw new CustomError({
@@ -219,9 +217,8 @@ export const verifyRazorpayService = async (userId,razorpay_order_id) => {
       explanation: "error in fetching all orders",
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     });
-    
   }
-}
+};
 //for admin
 export const allOrdersService = async () => {
   try {

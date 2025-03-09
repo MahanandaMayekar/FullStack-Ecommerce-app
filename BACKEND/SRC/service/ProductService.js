@@ -1,10 +1,10 @@
+import { v2 as cloudinary } from "cloudinary";
+import { StatusCodes } from "http-status-codes";
 import { productRepository } from "../repository/ProductRepository.js";
 import CustomError from "../utils/errors/CustomError.js";
-import { v2 as cloudinary } from "cloudinary";
 import ClientError from "./../utils/errors/ClientError.js";
-import { StatusCodes } from "http-status-codes";
 
-export const addProductService = async (owrnerId,ProductData, imageData) => {
+export const addProductService = async (owrnerId, ProductData, imageData) => {
   try {
     const {
       name,
@@ -54,10 +54,12 @@ export const addProductService = async (owrnerId,ProductData, imageData) => {
       bestSeller: bestSeller === "true",
       sizes: JSON.parse(sizes),
       image: imageUrls,
-      owner:owrnerId
+      owner: owrnerId,
     });
 
-    const productWithDetails=await productRepository.getProductWithDetails(product._id)
+    const productWithDetails = await productRepository.getProductWithDetails(
+      product._id
+    );
 
     return productWithDetails;
   } catch (error) {
@@ -87,22 +89,21 @@ export const fetchAllProductsService = async () => {
 
 export const deleteProductsService = async (productId) => {
   try {
-
     if (!productId) {
-     throw new ClientError({
-       message: " productId is required",
-       explanation: "productId not found",
-       statusCode: StatusCodes.BAD_REQUEST,
-     });
+      throw new ClientError({
+        message: " productId is required",
+        explanation: "productId not found",
+        statusCode: StatusCodes.BAD_REQUEST,
+      });
     }
     const deletedProduct = await productRepository.deleteById(productId);
 
     if (!deletedProduct) {
-       throw new ClientError({
-         message: " Product not found or already deleted",
-         explanation: "Invalid productId or product does not exist",
-         statusCode: StatusCodes.NOT_FOUND,
-       });
+      throw new ClientError({
+        message: " Product not found or already deleted",
+        explanation: "Invalid productId or product does not exist",
+        statusCode: StatusCodes.NOT_FOUND,
+      });
     }
     //console.log("all products", allProducts);
     return deletedProduct;
@@ -125,7 +126,7 @@ export const findProductByIdService = async (productId) => {
         statusCode: StatusCodes.BAD_REQUEST,
       });
     }
-    const product = await productRepository.findById(productId)
+    const product = await productRepository.findById(productId);
     if (!product) {
       throw new ClientError({
         message: " Product you are trying to fetch is  not found ",
@@ -134,8 +135,7 @@ export const findProductByIdService = async (productId) => {
       });
     }
 
-    return product
-    
+    return product;
   } catch (error) {
     console.log("error in fetching  product by id", error);
     throw new CustomError({
@@ -143,6 +143,5 @@ export const findProductByIdService = async (productId) => {
       explanation: "error in fetching  product by id",
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     });
-    
   }
-}
+};

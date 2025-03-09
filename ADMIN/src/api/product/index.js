@@ -13,11 +13,11 @@ export const addProductRequest = async ({ token, formData }) => {
         },
       }
     );
-    console.log("response of add product", response.data.Response)
+    //console.log("response of add product", response.data.Response);
 
     return response.data.Response;
   } catch (error) {
-    console.error("error in adding product", error.response);
+    //console.error("error in adding product", error.response);
     throw new Error(
       error.response ||
         "Unable to login Please check your credentials and try again."
@@ -25,31 +25,25 @@ export const addProductRequest = async ({ token, formData }) => {
   }
 };
 
-
-export const fetchAllProductsRequest = async ({token}) => {
+export const fetchAllProductsRequest = async ({ token }) => {
   try {
     const response = await axios.get(
-      "http://localhost:8000/api/products/list-products", {
+      "http://localhost:8000/api/products/list-products",
+      {
         headers: {
-          "x-access-token":token
-        }
+          "x-access-token": token,
+        },
       }
     );
-    console.log("Successfully fetched all the product", response.data.Response);
+    //console.log("Successfully fetched all the product", response.data.Response);
     return response.data.Response;
-    
   } catch (error) {
-    console.error("error in fetching all products", error.response);
-    throw new Error(
-      error.response ||
-        "failed to fetch all the products."
-    );
-    
+    //console.error("error in fetching all products", error.response);
+    throw new Error(error.response || "failed to fetch all the products.");
   }
-}
+};
 
-
-export const deleteProductByIdRequest = async({productId,token}) => {
+export const deleteProductByIdRequest = async ({ productId, token }) => {
   try {
     const response = await axios.delete(
       `http://localhost:8000/api/products/deleteProduct/${productId}`,
@@ -59,15 +53,10 @@ export const deleteProductByIdRequest = async({productId,token}) => {
         },
       }
     );
-     console.log(
-       "Successfully deleted the product",
-       response.data.Response
-     );
-     return response.data.Response;
-    
+    //console.log("Successfully deleted the product", response.data.Response);
+    return response.data.Response;
   } catch (error) {
-    console.error("error in deleting the product by id", error.data);
+    //console.error("error in deleting the product by id", error.data);
     throw new Error(error.response || "failed to delete the product.");
-    
   }
-}
+};

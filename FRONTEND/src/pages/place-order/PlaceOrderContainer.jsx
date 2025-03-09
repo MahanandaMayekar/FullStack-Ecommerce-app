@@ -1,14 +1,14 @@
-import { useState } from "react";
-import PlaceOrder from "./PlaceOrder";
-import useCart from "@/hooks/context/useCart";
-import useFetchAllProducts from "@/hooks/products/useFetchAllProducts";
 import useTotalCartAmount from "@/hooks/cart/useTotalCartAmount";
+import useCart from "@/hooks/context/useCart";
 import { useShopContext } from "@/hooks/context/useShopContext";
 import useCodMethod from "@/hooks/order/useCodMethod";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import useStripeMethod from "@/hooks/order/useStripeMethod";
 import useRazorpayMethod from "@/hooks/order/useRazorpayMethod";
+import useStripeMethod from "@/hooks/order/useStripeMethod";
+import useFetchAllProducts from "@/hooks/products/useFetchAllProducts";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import PlaceOrder from "./PlaceOrder";
 const PlaceOrderContainer = () => {
   const navigate = useNavigate();
   const { orderByRazorpayMutation, isPending: isRazorpayMethodPending } =

@@ -5,16 +5,20 @@ import {
   fetchAllProductsService,
   findProductByIdService,
 } from "../service/ProductService.js";
-import { SuccessResponse } from "./../utils/common/SuccessResponse.js";
 import ClientError from "../utils/errors/ClientError.js";
 import CustomError from "../utils/errors/CustomError.js";
+import { SuccessResponse } from "./../utils/common/SuccessResponse.js";
 
 export const addProductController = async (req, res) => {
   try {
     //console.log("req.body", req.body);
- const ownerId=req.user._id
+    const ownerId = req.user._id;
 
-    const ProductResponse = await addProductService(ownerId,req.body, req.files);
+    const ProductResponse = await addProductService(
+      ownerId,
+      req.body,
+      req.files
+    );
     return res
       .status(StatusCodes.CREATED)
       .json(SuccessResponse("Product created successfully", ProductResponse));
@@ -104,7 +108,7 @@ export const deleteProductsController = async (req, res) => {
 
 export const fetchProductByIdController = async (req, res) => {
   try {
-    const productId=req.params.productId
+    const productId = req.params.productId;
     const productResponse = await findProductByIdService(productId);
     return res
       .status(StatusCodes.OK)

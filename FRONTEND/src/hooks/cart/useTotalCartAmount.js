@@ -1,4 +1,3 @@
-import { useAssets } from "../assets/useAssets";
 import useCart from "../context/useCart";
 import useFetchAllProducts from "../products/useFetchAllProducts";
 
@@ -7,7 +6,7 @@ const useTotalCartAmount = () => {
   const { cartItems } = useCart();
   let totalAmout = 0;
   if (isLoading) {
-    return 0
+    return 0;
   }
   for (let items in cartItems) {
     let itemInfo = productList.find((product) => product._id === items);

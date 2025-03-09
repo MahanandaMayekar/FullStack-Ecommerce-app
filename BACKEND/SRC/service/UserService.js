@@ -1,10 +1,10 @@
-import { UserRepository } from "../repository/UserRepository.js";
-import CustomError from "../utils/errors/CustomError.js";
+import bcrypt from "bcrypt";
 import { StatusCodes } from "http-status-codes";
-import ClientError from "../utils/errors/ClientError.js";
 import validator from "validator";
-import bcrypt from 'bcrypt'
-import { GenToken } from '../utils/common/GenToken.js';
+import { UserRepository } from "../repository/UserRepository.js";
+import { GenToken } from "../utils/common/GenToken.js";
+import ClientError from "../utils/errors/ClientError.js";
+import CustomError from "../utils/errors/CustomError.js";
 export const RegisterUser = async (userData) => {
   try {
     const { email, password } = userData;
@@ -42,7 +42,6 @@ export const RegisterUser = async (userData) => {
   }
 };
 
-
 export const UserLogin = async (userData) => {
   try {
     const { email, password } = userData;
@@ -68,32 +67,28 @@ export const UserLogin = async (userData) => {
         statusCode: StatusCodes.NOT_FOUND,
       });
     }
-    console.log("userExist",userExist);
-    
+    console.log("userExist", userExist);
 
-    const isPasswordMatch = bcrypt.compareSync(password, userExist.password)
+    const isPasswordMatch = bcrypt.compareSync(password, userExist.password);
     if (!isPasswordMatch) {
       throw new ClientError({
         message: " invalid password,Please try again",
         explanation: "Invalid data sent by the client",
         statusCode: StatusCodes.NOT_FOUND,
       });
-      
     }
 
     const TOKEN = GenToken({
       id: userExist._id,
-      email:userExist.email
-    })
+      email: userExist.email,
+    });
 
     return {
       name: userExist.name,
       email: userExist.email,
       id: userExist._id,
-      token:TOKEN
-    }
-
-    
+      token: TOKEN,
+    };
   } catch (error) {
     console.log("error in login", error.message);
     throw new CustomError({
@@ -101,6 +96,5 @@ export const UserLogin = async (userData) => {
       explanation: "User login failed",
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     });
-    
   }
-}
+};

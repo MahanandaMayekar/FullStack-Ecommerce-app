@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import Login from "./Login";
 import useLogin from "@/hooks/auth/useLogin";
-import { useNavigate } from "react-router-dom";
 import useRegisterUser from "@/hooks/auth/useRegisterUser";
-import { toast } from "react-toastify"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Login from "./Login";
 
 const LoginContainer = () => {
   const {
@@ -27,8 +27,6 @@ const LoginContainer = () => {
     email: "",
     password: "",
   });
-
-  
 
   const handleFormSubmit = async (e) => {
     try {
@@ -84,7 +82,7 @@ const LoginContainer = () => {
       setRegisterUser={setRegisterUser}
       userRegisterIsPending={userRegisterIsPending}
       loginIspending={loginIspending}
-          />
+    />
   );
 };
 

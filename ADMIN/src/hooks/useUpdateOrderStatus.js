@@ -1,8 +1,8 @@
-import { changeOrderStatusRequest } from '@/api/order';
-import { useAuth } from './useAuth';
+import { changeOrderStatusRequest } from "@/api/order";
+import { useAuth } from "./useAuth";
 
-import { useMutation } from '@tanstack/react-query';
-changeOrderStatusRequest
+import { useMutation } from "@tanstack/react-query";
+changeOrderStatusRequest;
 const useUpdateOrderStatus = () => {
   const { auth } = useAuth();
   const {
@@ -12,7 +12,7 @@ const useUpdateOrderStatus = () => {
     mutateAsync: statausUpdatedOrder,
   } = useMutation({
     mutationFn: ({ orderId, status }) =>
-      changeOrderStatusRequest({ orderId, status,token: auth?.token }),
+      changeOrderStatusRequest({ orderId, status, token: auth?.token }),
     onSuccess: (data) => {
       console.log("successfully updated order status", data);
     },
@@ -29,6 +29,6 @@ const useUpdateOrderStatus = () => {
     error,
     statausUpdatedOrder,
   };
-}
+};
 
-export default useUpdateOrderStatus
+export default useUpdateOrderStatus;

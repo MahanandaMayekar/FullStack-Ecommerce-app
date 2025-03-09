@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import AddProduct from "./AddProduct";
 import useAddProduct from "@/hooks/useAddProduct";
 import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import AddProduct from "./AddProduct";
 
 const AddProductContainer = () => {
-  const { addProductMutation,isSuccess } = useAddProduct();
+  const { addProductMutation, isSuccess } = useAddProduct();
   const { auth } = useAuth();
   const [images, setimages] = useState({
     image1: null,
@@ -61,9 +61,8 @@ const AddProductContainer = () => {
       toast("Product added successfully");
     } catch (error) {
       toast.error("Failed to add Product");
-      console.log("error in submitting form"|| error.message);
+      console.log("error in submitting form" || error.message);
     }
-   
   }
   useEffect(() => {
     if (isSuccess) {
@@ -84,10 +83,8 @@ const AddProductContainer = () => {
         image3: null,
         image4: null,
       });
-
-      
     }
-  }, [isSuccess]); 
+  }, [isSuccess]);
   return (
     <AddProduct
       images={images}

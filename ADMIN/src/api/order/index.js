@@ -1,7 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 export const adminOrderDetailsRequest = async ({ token }) => {
-    try {
-          
+  try {
     const response = await axios.get(
       "http://localhost:8000/api/order/list-orders",
       {
@@ -10,7 +9,10 @@ export const adminOrderDetailsRequest = async ({ token }) => {
         },
       }
     );
-    console.log("Successfully fetched admin order details", response.data.Response);
+    /*console.log(
+      "Successfully fetched admin order details",
+      response.data.Response
+    );*/
 
     return response.data.Response;
   } catch (error) {
@@ -20,17 +22,18 @@ export const adminOrderDetailsRequest = async ({ token }) => {
     );
   }
 };
-export const changeOrderStatusRequest = async ({ token,orderId,status }) => {
+export const changeOrderStatusRequest = async ({ token, orderId, status }) => {
   try {
-    const response = await axios.post("http://localhost:8000/api/order/status",{orderId,status}, {
-      headers: {
-        "x-access-token": token,
-      },
-    });
-    console.log(
-      "Successfully updated order status",
-      response.data.Response
+    const response = await axios.post(
+      "http://localhost:8000/api/order/status",
+      { orderId, status },
+      {
+        headers: {
+          "x-access-token": token,
+        },
+      }
     );
+    //console.log("Successfully updated order status", response.data.Response);
 
     return response.data.Response;
   } catch (error) {
@@ -40,4 +43,3 @@ export const changeOrderStatusRequest = async ({ token,orderId,status }) => {
     );
   }
 };
-

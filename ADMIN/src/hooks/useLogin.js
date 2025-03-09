@@ -1,17 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
 import { loginRequest } from "./../api/auth/index.js"; // Ensure this is an async function
-import { useAuth } from './useAuth.js';
-
+import { useAuth } from "./useAuth.js";
 
 export const useLogin = () => {
-  const {setAuth}=useAuth()
+  const { setAuth } = useAuth();
   const {
     mutateAsync: loginMutation, // Renamed for clarity
     isLoading,
     isSuccess,
     error,
   } = useMutation({
-    mutationFn: ({ email, password,token }) => loginRequest({ email, password,token }), // Ensure loginRequest is returning a promise
+    mutationFn: ({ email, password, token }) =>
+      loginRequest({ email, password, token }), // Ensure loginRequest is returning a promise
     onSuccess: (data) => {
       console.log("Successfully logged in", data);
       const userObject = JSON.stringify(data);
@@ -21,7 +21,6 @@ export const useLogin = () => {
         user: data,
         token: data.token,
       });
-     ;
     },
     onError: (error) => {
       console.error("Login failed", error);
@@ -35,6 +34,3 @@ export const useLogin = () => {
     error,
   };
 };
-
-
-

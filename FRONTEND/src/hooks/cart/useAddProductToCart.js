@@ -2,8 +2,8 @@ import { addProductTocartRequest } from "@/api/cart";
 import { useMutation } from "@tanstack/react-query";
 
 const useAddProductToCart = () => {
-  const token = localStorage.getItem("token")
-  
+  const token = localStorage.getItem("token");
+
   const {
     isPending,
     isSuccess,

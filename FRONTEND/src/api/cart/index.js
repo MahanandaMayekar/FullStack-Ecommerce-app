@@ -11,7 +11,7 @@ export const addProductTocartRequest = async ({ productId, size, token }) => {
         },
       }
     );
-    console.log("Successfully added product to cart", response.data.Response);
+    //console.log("Successfully added product to cart", response.data.Response);
     return response?.data?.Response;
   } catch (error) {
     console.log("error in adding product to cart", error);
@@ -37,10 +37,10 @@ export const updateProductQuantityInCartRequest = async ({
         },
       }
     );
-    console.log(
+    /*console.log(
       "Successfully updated product quantity in cart",
       response.data.Response
-    );
+    );*/
     return response?.data?.Response;
   } catch (error) {
     console.log("error in updating quantity in cart", error.response.data);
@@ -50,23 +50,17 @@ export const updateProductQuantityInCartRequest = async ({
   }
 };
 
-export const FetchCartDetailsRequest = async ({token}) => {
-  try {    
-        const response = await axiosconfig.get("/cart/get-cart-details", {
-            headers: {
-                "x-access-token":token
-            }
-        });
-        console.log(
-          "Successfully fetched cart details",
-          response.data.Response
-      );
-      return response?.data?.Response;
-        
-    } catch (error) {
-        console.log("error in fetching cart details", error.response.data);
+export const FetchCartDetailsRequest = async ({ token }) => {
+  try {
+    const response = await axiosconfig.get("/cart/get-cart-details", {
+      headers: {
+        "x-access-token": token,
+      },
+    });
+    //console.log("Successfully fetched cart details", response.data.Response);
+    return response?.data?.Response;
+  } catch (error) {
+    //console.log("error in fetching cart details", error.response.data);
     throw error.response.data;
-  
-        
-    }
-}
+  }
+};

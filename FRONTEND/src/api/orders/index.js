@@ -36,7 +36,6 @@ export const placeOrderByRazorpayRequest = async ({ token, orderData }) => {
   }
 };
 
-
 export const placeOrderByStripeRequest = async ({ token, orderData }) => {
   try {
     const response = await axiosconfig.post("/order/stripe", orderData, {
@@ -54,15 +53,21 @@ export const placeOrderByStripeRequest = async ({ token, orderData }) => {
   }
 };
 
-
-export const StripeVerificationRequest = async ({ orderId, success,token }) => {
+export const StripeVerificationRequest = async ({
+  orderId,
+  success,
+  token,
+}) => {
   try {
-       
-    const response = await axiosconfig.post("/order/verify", {orderId, success}, {
-      headers: {
-        "x-access-token": token,
-      },
-    });
+    const response = await axiosconfig.post(
+      "/order/verify",
+      { orderId, success },
+      {
+        headers: {
+          "x-access-token": token,
+        },
+      }
+    );
     console.log("Successfully verified stripe payment", response.data);
     return response.data;
   } catch (error) {
@@ -79,15 +84,15 @@ export const RazorpayVerificationRequest = async ({
   try {
     const response = await axiosconfig.post(
       "/order/verifyRazorpay",
-      { razorpay_order_id }, 
+      { razorpay_order_id },
       {
         headers: {
           "x-access-token": token,
-            "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
       }
     );
-    console.log("Successfully verified Razorpay payment", response.data);
+    //console.log("Successfully verified Razorpay payment", response.data);
     return response.data;
   } catch (error) {
     console.error(
@@ -107,10 +112,10 @@ export const usersOrderDetailsRequest = async ({ token }) => {
         "x-access-token": token,
       },
     });
-    console.log(
+    /*console.log(
       "Successfully fetched order details of the user",
       response.data.Response
-    );
+    );*/
     return response?.data?.Response;
   } catch (error) {
     console.error("Error from API:", error.response?.data || error);

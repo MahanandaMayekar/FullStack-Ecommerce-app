@@ -1,9 +1,8 @@
-import React from "react";
-import Title from "./Title";
-import { useState, useEffect } from "react";
-import LatestProductItem from "./LatestProductItem";
 import useFetchAllProducts from "@/hooks/products/useFetchAllProducts";
+import { useEffect, useState } from "react";
 import { Instagram } from "react-content-loader";
+import LatestProductItem from "./LatestProductItem";
+import Title from "./Title";
 
 const LatestCollection = () => {
   const { productList, isLoading } = useFetchAllProducts();

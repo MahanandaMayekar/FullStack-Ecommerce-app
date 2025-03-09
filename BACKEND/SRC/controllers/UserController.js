@@ -1,9 +1,8 @@
 import { StatusCodes } from "http-status-codes";
 import { RegisterUser, UserLogin } from "../service/UserService.js";
 import { SuccessResponse } from "../utils/common/SuccessResponse.js";
-import CustomError from "../utils/errors/CustomError.js";
 import ClientError from "../utils/errors/ClientError.js";
-
+import CustomError from "../utils/errors/CustomError.js";
 
 export const registerUserController = async (req, res) => {
   try {
@@ -30,15 +29,15 @@ export const registerUserController = async (req, res) => {
   }
 };
 
-export const userLoginController = async (req,res) => {
+export const userLoginController = async (req, res) => {
   try {
-    const{email,password}=req.body
-    const response = await UserLogin({email,password})
+    const { email, password } = req.body;
+    const response = await UserLogin({ email, password });
     console.log("response in controller login", response);
-    
-    return res.status(StatusCodes.OK).json(SuccessResponse("User signed in successfully",response))
-    
 
+    return res
+      .status(StatusCodes.OK)
+      .json(SuccessResponse("User signed in successfully", response));
   } catch (error) {
     console.log("user login failed at controller", error);
     if (error instanceof ClientError || error instanceof CustomError) {

@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import Login from "./Login"; // Ensure you pass props properly to the Login component
+import { useAuth } from "@/hooks/useAuth";
 import { useLogin } from "@/hooks/useLogin";
-import { toast } from 'react-toastify';
-import { useAuth } from '@/hooks/useAuth';
+import { useState } from "react";
+import Login from "./Login"; // Ensure you pass props properly to the Login component
 
 const LoginContainer = () => {
-  const{auth}=useAuth()
+  const { auth } = useAuth();
   const { loginMutation, isLoading, isSuccess, error } = useLogin();
-  
+
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -15,14 +14,14 @@ const LoginContainer = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login details:", login);
+    //console.log("Login details:", login);
 
     try {
       // Trigger the mutation
       await loginMutation({
         email: login.email,
         password: login.password,
-        token:auth.token
+        token: auth.token,
       });
     } catch (err) {
       // Handle any errors that occurred during mutation

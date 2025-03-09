@@ -1,9 +1,9 @@
-import RelatedProducts from '@/components/RelatedProducts';
+import RelatedProducts from "@/components/RelatedProducts";
 import { useAssets } from "@/hooks/assets/useAssets";
-import useCart from '@/hooks/context/useCart';
-import { useShopContext } from '@/hooks/context/useShopContext';
-import useFetchAllProducts from '@/hooks/products/useFetchAllProducts';
-import React, { useEffect, useState } from "react";
+import useCart from "@/hooks/context/useCart";
+import { useShopContext } from "@/hooks/context/useShopContext";
+import useFetchAllProducts from "@/hooks/products/useFetchAllProducts";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const Products = () => {
@@ -13,14 +13,9 @@ const Products = () => {
   const [currentProduct, setCurrentProduct] = useState(false);
   const [currentImage, setCurrentImage] = useState("");
   const { currency } = useShopContext();
- // const [ProductSize, setProductSize] = useState("");
-  const {
-    cartItems,
-    setCartItems,
-    addToCart,
-    ProductSize,
-    setProductSize,
-  } = useCart();
+  // const [ProductSize, setProductSize] = useState("");
+  const { cartItems, setCartItems, addToCart, ProductSize, setProductSize } =
+    useCart();
 
   const fetchProductDetails = async () => {
     productList?.map((item) => {
@@ -98,7 +93,10 @@ const Products = () => {
               </div>
             </div>
             <div className="mt-4">
-              <button className="bg-slate-900 rounded-sm text-white p-3 active:bg-slate-600" onClick={()=>addToCart(currentProduct._id,ProductSize)}>
+              <button
+                className="bg-slate-900 rounded-sm text-white p-3 active:bg-slate-600"
+                onClick={() => addToCart(currentProduct._id, ProductSize)}
+              >
                 ADD TO CART
               </button>
             </div>
@@ -147,7 +145,6 @@ const Products = () => {
       <RelatedProducts
         category={currentProduct.category}
         subCategory={currentProduct.subCategory}
-    
       />
     </div>
   ) : (
