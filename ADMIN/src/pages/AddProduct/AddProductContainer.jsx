@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import AddProduct from "./AddProduct";
 
 const AddProductContainer = () => {
-  const { addProductMutation, isSuccess } = useAddProduct();
+  const { addProductMutation, isSuccess, isLoading } = useAddProduct();
   const { auth } = useAuth();
   const [images, setimages] = useState({
     image1: null,
@@ -93,6 +93,7 @@ const AddProductContainer = () => {
       setProductInfo={setProductInfo}
       handleSizeSelection={handleSizeSelection}
       onSubmitHandler={onSubmitHandler}
+      isLoading={isLoading}
     />
   );
 };

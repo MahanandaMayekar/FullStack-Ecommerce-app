@@ -10,9 +10,9 @@ const AddProduct = ({
   setProductInfo,
   handleSizeSelection,
   onSubmitHandler,
-  
+  isLoading,
 }) => {
-  const{isLoading}=useAddProduct()
+  
   return (
     <form className="flex flex-col gap-3 mb-10" onSubmit={onSubmitHandler}>
       <div className="sm:w-full w-2/3">
@@ -246,12 +246,10 @@ const AddProduct = ({
           type="submit"
           className="bg-black text-white p-3 rounded-sm active:bg-slate-700 w-[200px] flex justify-center items-center"
         >
-          {isLoading ? (
-            //<Loader className=" animate-spin rotate-180 " />
-          "submitting please wait"
-          ) : (
-            "ADD PRODUCT"
-          )}
+          {isLoading
+            ? <Loader className=" animate-spin rotate-180 " />
+              //"submitting please wait"
+            : "ADD PRODUCT"}
         </button>
       </div>
     </form>

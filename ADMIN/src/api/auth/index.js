@@ -1,4 +1,4 @@
-import axiosConfig from '@/config/axiosConfig.js';
+
 import axios from 'axios';
 
 export const loginRequest = async ({ email, password,token}) => {

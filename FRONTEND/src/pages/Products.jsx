@@ -40,7 +40,7 @@ const Products = () => {
 
         <div className="flex sm:flex-row sm:gap-4 flex-col gap-4  p-3 flex-1">
           <div className="w-full sm:w-[60%] md:w-[80%] ">
-            <img src={currentImage} alt="" className="w-full" />
+            <img src={currentImage} alt="" className="w-full object-cover " />
           </div>
           <div className="flex gap-4 sm:flex-col   md:w-[22%] sm:w-[12%] w-[22%] ">
             {currentProduct.image.map((item, index) => (
@@ -49,7 +49,7 @@ const Products = () => {
                 onClick={() => setCurrentImage(item)}
                 alt=""
                 key={index}
-                className="w-[full] sm:w-full  sm:mb-3 object-cover"
+                className="w-[300px] h-[200px] object-cover rounded-lg shadow-md"
               />
             ))}
           </div>

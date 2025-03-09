@@ -13,7 +13,7 @@ export const addProductRequest = async ({ token, formData }) => {
         },
       }
     );
-    //console.log("response of add product", response.data.Response);
+    console.log("response of add product", response.data.Response);
 
     return response.data.Response;
   } catch (error) {
