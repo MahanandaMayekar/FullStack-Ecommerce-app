@@ -3,7 +3,7 @@ import axiosConfig from '@/config/axiosConfig';
 export const adminOrderDetailsRequest = async ({ token }) => {
   try {
     const response = await axiosConfig.get(
-      "http://localhost:8000/api/order/list-orders",
+      "/order/list-orders",
       {
         headers: {
           "x-access-token": token,
@@ -26,7 +26,7 @@ export const adminOrderDetailsRequest = async ({ token }) => {
 export const changeOrderStatusRequest = async ({ token, orderId, status }) => {
   try {
     const response = await axiosConfig.post(
-      "http://localhost:8000/api/order/status",
+      "/order/status",
       { orderId, status },
       {
         headers: {

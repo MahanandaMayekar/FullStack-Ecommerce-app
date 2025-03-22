@@ -1,9 +1,9 @@
-import axios from "axios";
+import axiosConfig from '@/config/axiosConfig';
 
 export const addProductRequest = async ({ token, formData }) => {
   try {
-    const response = await axios.post(
-      "http://localhost:8000/api/products/add",
+    const response = await axiosConfig.post(
+      "/products/add",
 
       formData,
       {
@@ -27,8 +27,8 @@ export const addProductRequest = async ({ token, formData }) => {
 
 export const fetchAllProductsRequest = async ({ token }) => {
   try {
-    const response = await axios.get(
-      "http://localhost:8000/api/products/list-products",
+    const response = await axiosConfig.get(
+      "/products/list-products",
       {
         headers: {
           "x-access-token": token,
@@ -45,8 +45,8 @@ export const fetchAllProductsRequest = async ({ token }) => {
 
 export const deleteProductByIdRequest = async ({ productId, token }) => {
   try {
-    const response = await axios.delete(
-      `http://localhost:8000/api/products/deleteProduct/${productId}`,
+    const response = await axiosConfig.delete(
+      `/products/deleteProduct/${productId}`,
       {
         headers: {
           "x-access-token": token,

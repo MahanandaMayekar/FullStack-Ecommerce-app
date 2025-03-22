@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import PlaceOrder from "./PlaceOrder";
 const PlaceOrderContainer = () => {
+  const token=localStorage.getItem("token")
   const navigate = useNavigate();
   const { orderByRazorpayMutation, isPending: isRazorpayMethodPending } =
     useRazorpayMethod();
@@ -34,6 +35,12 @@ const PlaceOrderContainer = () => {
   });
 
   const [payMethod, setPayMethod] = useState("");
+  if (!token) {
+    if (payMethod === "stripe" || payMethod === "COD" || payMethod === "razor") {
+      navigate("/login")
+      toast("Please log in or register to place an order.");
+    }
+  }
   const onChangeHandler = (e) => {
     const name = e.target.name;
     const value = e.target.value;

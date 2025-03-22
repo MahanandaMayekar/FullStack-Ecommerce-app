@@ -1,9 +1,7 @@
 import { StripeVerificationRequest } from "@/api/orders";
 import { useMutation } from "@tanstack/react-query";
-import useAuth from "../auth/useAuth";
 
 const useStripeVerification = () => {
-  const { auth } = useAuth();
   const token = localStorage.getItem("token");
 
   const {

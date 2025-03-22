@@ -1,10 +1,8 @@
 
 import { usersOrderDetailsRequest } from '@/api/orders';
 import { useQuery } from "@tanstack/react-query";
-import useAuth from '../auth/useAuth';
 const useFetchUsersOrderDetails = () => {
-    const { auth } = useAuth()
-    
+      const token=localStorage.getItem("token")
     
   const {
     data: orderedProductList,
@@ -13,7 +11,7 @@ const useFetchUsersOrderDetails = () => {
     isLoading,
   } = useQuery({
     queryKey: ["fetchUsersOrderDetails"],
-    queryFn: () => usersOrderDetailsRequest({token:auth.token}),
+    queryFn: () => usersOrderDetailsRequest({ token: token }),
     staleTime: 30000,
   });
 

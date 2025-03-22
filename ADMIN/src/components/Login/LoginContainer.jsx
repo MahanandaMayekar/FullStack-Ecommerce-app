@@ -2,14 +2,15 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLogin } from "@/hooks/useLogin";
 import { useState } from "react";
 import Login from "./Login"; // Ensure you pass props properly to the Login component
-
+import { useNavigate } from 'react-router-dom';
 const LoginContainer = () => {
+  const navigate=useNavigate()
   const { auth } = useAuth();
   const { loginMutation, isLoading, isSuccess, error } = useLogin();
 
   const [login, setLogin] = useState({
-    email: "",
-    password: "",
+    email: "maha.m@gmail.com",
+    password: "mahananda123",
   });
 
   const handleLoginSubmit = async (e) => {
@@ -23,6 +24,7 @@ const LoginContainer = () => {
         password: login.password,
         token: auth.token,
       });
+      navigate("/orders")
     } catch (err) {
       // Handle any errors that occurred during mutation
       console.error("Login failed----:", err);
