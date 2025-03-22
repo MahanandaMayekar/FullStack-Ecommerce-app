@@ -4,7 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon SRC/index.js"
+    "dev": "nodemon SRC/index.js",
+    "start": "node SRC/index.js"
+    
   },
   "keywords": [],
   "author": "",
