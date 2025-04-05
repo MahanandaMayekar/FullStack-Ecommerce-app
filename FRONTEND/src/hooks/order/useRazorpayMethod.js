@@ -2,13 +2,17 @@ import { placeOrderByRazorpayRequest } from "@/api/orders";
 import { useMutation } from "@tanstack/react-query";
 import useAuth from "../auth/useAuth";
 import useRazorpayVerification from "./useRazorpayVerification";
+import { useEffect } from 'react';
 
 const useRazorpayMethod = () => {
   const { verifyRazorpayMutation } = useRazorpayVerification();
   const { auth } = useAuth();
+ 
+    console.log("api", import.meta.env.VITE_RAZORPAR_KEY_ID);
+  
   const initPay = (razorpayOrder) => {
     const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      key: import.meta.env.VITE_RAZORPAR_KEY_ID,
       amount: razorpayOrder.amount,
       currency: razorpayOrder.currency,
       name: "Your Store",
